@@ -2,6 +2,7 @@
 import { getArticles } from '@/lib/api';
 import HeroArticle from '@/components/HeroArticle';
 import ArticleCard from '@/components/ArticleCard';
+import { AnimatedCards, AnimatedCard } from '@/components/AnimatedCards';
 
 export default async function Home() {
   let articles: any[] = [];
@@ -14,8 +15,9 @@ export default async function Home() {
 
   if (!articles || articles.length === 0) {
     return (
-      <div className="text-center py-20 text-gray-400">
+      <div className="text-center py-20 text-muted-foreground">
         <p className="text-xl">No articles yet</p>
+        <p className="text-sm mt-2">Start writing from the admin panel.</p>
       </div>
     );
   }
@@ -23,18 +25,23 @@ export default async function Home() {
   const [hero, ...rest] = articles;
 
   return (
-    <div>
-      <section className="mb-12">
+    <div className="space-y-12">
+      <section>
         <HeroArticle article={hero} />
       </section>
 
-      <section>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rest.map((article: any) => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
-        </div>
-      </section>
+      {rest.length > 0 && (
+        <section>
+          <h2 className="text-lg font-bold mb-6 uppercase tracking-wider text-muted-foreground">Latest</h2>
+          <AnimatedCards>
+            {rest.map((article: any, i: number) => (
+              <AnimatedCard key={article.id}>
+                <ArticleCard article={article} index={i} />
+              </AnimatedCard>
+            ))}
+          </AnimatedCards>
+        </section>
+      )}
     </div>
   );
 }
