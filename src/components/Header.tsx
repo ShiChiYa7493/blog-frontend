@@ -1,8 +1,12 @@
 import Link from 'next/link';
 import { getCategories } from '@/lib/api';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { MobileNav } from '@/components/MobileNav';
+import { Search } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
 
 export default async function Header() {
-  let categories = [];
+  let categories: { id: number; name: string; slug: string }[] = [];
   try {
     categories = await getCategories();
   } catch {
@@ -10,30 +14,41 @@ export default async function Header() {
   }
 
   return (
-    <header className="border-b-2 border-gray-900">
-      <div className="max-w-6xl mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-black tracking-tight">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+        {/* Left: Mobile menu + Logo */}
+        <div className="flex items-center gap-2">
+          <MobileNav categories={categories} />
+          <Link href="/" className="text-xl font-black tracking-tight">
             SHICHIYA
           </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm">
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {categories.map((cat: any) => (
-              <Link
-                key={cat.id}
-                href={`/categories/${cat.slug}`}
-                className="hover:text-gray-600 transition-colors"
-              >
-                {cat.name}
-              </Link>
-            ))}
-            <Link href="/archives" className="hover:text-gray-600 transition-colors">
-              Archives
+        </div>
+
+        {/* Center: Desktop nav */}
+        <nav className="hidden md:flex items-center gap-6 text-sm">
+          {categories.map((cat: { id: number; name: string; slug: string }) => (
+            <Link
+              key={cat.id}
+              href={`/categories/${cat.slug}`}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {cat.name}
             </Link>
-            <Link href="/about" className="hover:text-gray-600 transition-colors">
-              About
-            </Link>
-          </nav>
+          ))}
+          <Link href="/archives" className="text-muted-foreground hover:text-foreground transition-colors">
+            Archives
+          </Link>
+          <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+            About
+          </Link>
+        </nav>
+
+        {/* Right: Search + Theme toggle */}
+        <div className="flex items-center gap-1">
+          <Link href="/search" className={buttonVariants({ variant: 'ghost', size: 'icon' })}>
+            <Search className="h-4 w-4" />
+          </Link>
+          <ThemeToggle />
         </div>
       </div>
     </header>
