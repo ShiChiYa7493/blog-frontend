@@ -2,26 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@400;700&display=swap');
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply text-gray-900 bg-white antialiased;
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  h1, h2, h3, h4 {
+    font-family: 'Noto Serif SC', Georgia, serif;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  article p {
+    @apply text-base leading-relaxed;
+    line-height: 1.8;
   }
 }
