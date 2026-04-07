@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -20,11 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="max-w-6xl mx-auto px-4 py-8 min-h-screen">
-            {children}
-          </main>
-          <Footer />
+          {children}
           <Toaster />
         </ThemeProvider>
       </body>
