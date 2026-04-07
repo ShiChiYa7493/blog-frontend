@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 
 export default function CommentForm({ slug, parentId, onSubmitted }: {
   slug: string;
@@ -38,15 +41,15 @@ export default function CommentForm({ slug, parentId, onSubmitted }: {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <input type="text" placeholder="Nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} required className="border border-gray-300 px-3 py-2 text-sm rounded-sm focus:outline-none focus:border-gray-900" />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className="border border-gray-300 px-3 py-2 text-sm rounded-sm focus:outline-none focus:border-gray-900" />
+        <Input type="text" placeholder="Nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} required />
+        <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
       </div>
-      <textarea placeholder="Write a comment..." value={content} onChange={(e) => setContent(e.target.value)} required rows={4} className="w-full border border-gray-300 px-3 py-2 text-sm rounded-sm focus:outline-none focus:border-gray-900" />
+      <Textarea placeholder="Write a comment..." value={content} onChange={(e) => setContent(e.target.value)} required rows={4} className="w-full" />
       <div className="flex items-center gap-4">
-        <button type="submit" disabled={submitting} className="bg-gray-900 text-white px-6 py-2 text-sm hover:bg-gray-700 disabled:opacity-50 transition-colors">
+        <Button type="submit" disabled={submitting}>
           {submitting ? 'Submitting...' : 'Submit'}
-        </button>
-        {message && <span className="text-sm text-gray-500">{message}</span>}
+        </Button>
+        {message && <span className="text-sm text-muted-foreground">{message}</span>}
       </div>
     </form>
   );

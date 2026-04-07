@@ -1,6 +1,7 @@
 import { searchArticles } from '@/lib/api';
 import ArticleCard from '@/components/ArticleCard';
 import Pagination from '@/components/Pagination';
+import { Input } from '@/components/ui/input';
 
 interface Article {
   id: number;
@@ -22,10 +23,10 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
     <div>
       <h1 className="text-3xl font-bold mb-4">Search</h1>
       <form action="/search" method="GET" className="mb-8">
-        <input type="text" name="q" defaultValue={q} placeholder="Search articles..." className="w-full max-w-lg border-2 border-gray-900 px-4 py-3 text-lg focus:outline-none" />
+        <Input type="text" name="q" defaultValue={q} placeholder="Search articles..." className="w-full max-w-lg text-lg h-12 px-4" />
       </form>
       {q && (
-        <p className="text-gray-500 mb-6">{results.meta.total} results for &ldquo;{q}&rdquo;</p>
+        <p className="text-muted-foreground mb-6">{results.meta.total} results for &ldquo;{q}&rdquo;</p>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {results.data.map((article) => (
