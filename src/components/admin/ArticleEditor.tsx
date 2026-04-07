@@ -4,7 +4,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { toast } from 'sonner';
 import { createArticle, updateArticle, uploadImage } from '@/lib/admin-api';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -49,12 +54,14 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
     try {
       if (article) {
         await updateArticle(article.id, data);
+        toast.success('Article updated');
       } else {
         await createArticle(data);
+        toast.success('Article created');
       }
       router.push('/admin/articles');
     } catch {
-      alert('Failed to save article');
+      toast.error('Failed to save article');
     }
     setSaving(false);
   };
@@ -62,41 +69,104 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required className="border border-gray-300 px-3 py-2 focus:outline-none focus:border-gray-900" />
-        <input type="text" placeholder="Slug (URL-safe)" value={slug} onChange={(e) => setSlug(e.target.value)} required className="border border-gray-300 px-3 py-2 focus:outline-none focus:border-gray-900" />
+        <div className="space-y-1">
+          <Label htmlFor="title">Title</Label>
+          <Input
+            id="title"
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </div>
+        <div className="space-y-1">
+          <Label htmlFor="slug">Slug</Label>
+          <Input
+            id="slug"
+            type="text"
+            placeholder="Slug (URL-safe)"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
+            required
+          />
+        </div>
       </div>
 
-      <input type="text" placeholder="Summary (optional)" value={summary} onChange={(e) => setSummary(e.target.value)} className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:border-gray-900" />
+      <div className="space-y-1">
+        <Label htmlFor="summary">Summary</Label>
+        <Input
+          id="summary"
+          type="text"
+          placeholder="Summary (optional)"
+          value={summary}
+          onChange={(e) => setSummary(e.target.value)}
+        />
+      </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <select value={categoryId} onChange={(e) => setCategoryId(Number(e.target.value))} className="border border-gray-300 px-3 py-2">
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>{cat.name}</option>
-          ))}
-        </select>
-        <select value={status} onChange={(e) => setStatus(e.target.value)} className="border border-gray-300 px-3 py-2">
-          <option value="DRAFT">Draft</option>
-          <option value="PUBLISHED">Published</option>
-        </select>
-        <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-500">Cover:</label>
-          <input type="file" accept="image/*" onChange={handleImageUpload} className="text-sm" />
+        <div className="space-y-1">
+          <Label htmlFor="category">Category</Label>
+          <select
+            id="category"
+            value={categoryId}
+            onChange={(e) => setCategoryId(Number(e.target.value))}
+            className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>{cat.name}</option>
+            ))}
+          </select>
+        </div>
+        <div className="space-y-1">
+          <Label htmlFor="status">Status</Label>
+          <select
+            id="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            <option value="DRAFT">Draft</option>
+            <option value="PUBLISHED">Published</option>
+          </select>
+        </div>
+        <div className="space-y-1">
+          <Label>Cover Image</Label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="text-sm text-muted-foreground"
+          />
         </div>
       </div>
 
       {coverImage && (
         <div className="flex items-center gap-2">
           <Image src={coverImage} alt="cover" width={64} height={64} className="h-16 w-auto rounded" />
-          <button type="button" onClick={() => setCoverImage('')} className="text-sm text-red-500">Remove</button>
+          <Button type="button" variant="destructive" size="sm" onClick={() => setCoverImage('')}>Remove</Button>
         </div>
       )}
 
-      <div className="flex flex-wrap gap-2">
-        {tags.map((tag) => (
-          <button key={tag.id} type="button" onClick={() => toggleTag(tag.id)} className={`text-xs px-3 py-1 border rounded-sm ${selectedTagIds.includes(tag.id) ? 'bg-gray-900 text-white border-gray-900' : 'border-gray-300 hover:bg-gray-50'}`}>
-            {tag.name}
-          </button>
-        ))}
+      <div className="space-y-1">
+        <Label>Tags</Label>
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <button
+              key={tag.id}
+              type="button"
+              onClick={() => toggleTag(tag.id)}
+              className={cn(
+                'text-xs px-3 py-1 border rounded-sm transition-colors',
+                selectedTagIds.includes(tag.id)
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : 'border-border text-muted-foreground hover:bg-muted'
+              )}
+            >
+              {tag.name}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div data-color-mode="light">
@@ -104,10 +174,10 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
       </div>
 
       <div className="flex gap-4">
-        <button type="submit" disabled={saving} className="bg-gray-900 text-white px-6 py-2 hover:bg-gray-700 disabled:opacity-50">
+        <Button type="submit" disabled={saving}>
           {saving ? 'Saving...' : article ? 'Update' : 'Create'}
-        </button>
-        <button type="button" onClick={() => router.back()} className="border border-gray-300 px-6 py-2 hover:bg-gray-50">Cancel</button>
+        </Button>
+        <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
       </div>
     </form>
   );

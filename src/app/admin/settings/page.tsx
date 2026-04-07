@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { toast } from 'sonner';
 import { getProfile, updateProfile, uploadImage } from '@/lib/admin-api';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 
 export default function AdminSettingsPage() {
   const [nickname, setNickname] = useState('');
   const [avatar, setAvatar] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
     getProfile().then((p: Record<string, unknown>) => {
@@ -22,6 +26,7 @@ export default function AdminSettingsPage() {
     if (!file) return;
     const result = await uploadImage(file);
     setAvatar(result.url);
+    toast.success('Avatar uploaded');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,32 +36,53 @@ export default function AdminSettingsPage() {
     if (password) data.password = password;
     await updateProfile(data);
     setPassword('');
-    setMessage('Settings saved');
-    setTimeout(() => setMessage(''), 3000);
+    toast.success('Settings saved');
   };
 
   return (
     <div className="max-w-lg">
       <h1 className="text-2xl font-bold mb-6">Settings</h1>
-      <form onSubmit={handleSubmit} className="bg-white border p-6 space-y-4">
-        <div>
-          <label className="block text-sm text-gray-500 mb-1">Avatar</label>
-          {avatar && <Image src={avatar} alt="avatar" width={64} height={64} className="w-16 h-16 rounded-full mb-2" />}
-          <input type="file" accept="image/*" onChange={handleAvatarUpload} className="text-sm" />
-        </div>
-        <div>
-          <label className="block text-sm text-gray-500 mb-1">Nickname</label>
-          <input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} className="w-full border px-3 py-2" />
-        </div>
-        <div>
-          <label className="block text-sm text-gray-500 mb-1">New Password (leave blank to keep current)</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full border px-3 py-2" />
-        </div>
-        <div className="flex items-center gap-4">
-          <button type="submit" className="bg-gray-900 text-white px-6 py-2 text-sm">Save</button>
-          {message && <span className="text-sm text-green-600">{message}</span>}
-        </div>
-      </form>
+      <Card>
+        <CardHeader>
+          <CardTitle>Profile</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label>Avatar</Label>
+              {avatar && (
+                <Image src={avatar} alt="avatar" width={64} height={64} className="w-16 h-16 rounded-full mb-2" />
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarUpload}
+                className="text-sm text-muted-foreground"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="nickname">Nickname</Label>
+              <Input
+                id="nickname"
+                type="text"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">New Password</Label>
+              <p className="text-xs text-muted-foreground">Leave blank to keep current password</p>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <Button type="submit">Save</Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

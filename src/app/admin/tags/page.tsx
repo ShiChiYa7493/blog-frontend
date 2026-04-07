@@ -4,7 +4,13 @@
 type AnyRecord = Record<string, any>;
 
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { getAdminTags, createTag, updateTag, deleteTag } from '@/lib/admin-api';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
+} from '@/components/ui/table';
 
 export default function AdminTagsPage() {
   const [tags, setTags] = useState<AnyRecord[]>([]);
@@ -19,9 +25,11 @@ export default function AdminTagsPage() {
     e.preventDefault();
     if (editingId) {
       await updateTag(editingId, { name, slug });
+      toast.success('Tag updated');
       setEditingId(null);
     } else {
       await createTag({ name, slug });
+      toast.success('Tag created');
     }
     setName(''); setSlug('');
     load();
@@ -32,6 +40,7 @@ export default function AdminTagsPage() {
   const handleDelete = async (id: number) => {
     if (!confirm('Delete this tag?')) return;
     await deleteTag(id);
+    toast.success('Tag deleted');
     load();
   };
 
@@ -39,27 +48,42 @@ export default function AdminTagsPage() {
     <div>
       <h1 className="text-2xl font-bold mb-6">Tags</h1>
       <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
-        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required className="border px-3 py-2 text-sm" />
-        <input type="text" placeholder="Slug" value={slug} onChange={(e) => setSlug(e.target.value)} required className="border px-3 py-2 text-sm" />
-        <button type="submit" className="bg-gray-900 text-white px-4 py-2 text-sm">{editingId ? 'Update' : 'Add'}</button>
-        {editingId && <button type="button" onClick={() => { setEditingId(null); setName(''); setSlug(''); }} className="border px-4 py-2 text-sm">Cancel</button>}
+        <Input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required className="max-w-[200px]" />
+        <Input type="text" placeholder="Slug" value={slug} onChange={(e) => setSlug(e.target.value)} required className="max-w-[200px]" />
+        <Button type="submit">{editingId ? 'Update' : 'Add'}</Button>
+        {editingId && (
+          <Button type="button" variant="outline" onClick={() => { setEditingId(null); setName(''); setSlug(''); }}>
+            Cancel
+          </Button>
+        )}
       </form>
-      <table className="w-full bg-white border">
-        <thead><tr className="border-b text-left text-sm text-gray-500"><th className="p-3">Name</th><th className="p-3">Slug</th><th className="p-3">Articles</th><th className="p-3">Actions</th></tr></thead>
-        <tbody>
-          {tags.map((tag: AnyRecord) => (
-            <tr key={tag.id} className="border-b">
-              <td className="p-3">{tag.name}</td>
-              <td className="p-3 text-sm text-gray-500">{tag.slug}</td>
-              <td className="p-3 text-sm">{tag._count?.articles || 0}</td>
-              <td className="p-3 flex gap-2">
-                <button onClick={() => handleEdit(tag)} className="text-sm text-blue-600">Edit</button>
-                <button onClick={() => handleDelete(tag.id)} className="text-sm text-red-600">Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="rounded-md border border-border bg-card">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Slug</TableHead>
+              <TableHead>Articles</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tags.map((tag: AnyRecord) => (
+              <TableRow key={tag.id}>
+                <TableCell>{tag.name}</TableCell>
+                <TableCell className="text-muted-foreground">{tag.slug}</TableCell>
+                <TableCell>{tag._count?.articles || 0}</TableCell>
+                <TableCell>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={() => handleEdit(tag)}>Edit</Button>
+                    <Button variant="destructive" size="sm" onClick={() => handleDelete(tag.id)}>Delete</Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { getStats } from '@/lib/admin-api';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileText, Eye, MessageSquare, BookOpen, PenLine } from 'lucide-react';
+
+const icons = [BookOpen, PenLine, FileText, MessageSquare, Eye];
 
 export default function DashboardPage() {
   const [stats, setStats] = useState<Record<string, number> | null>(null);
@@ -10,7 +14,7 @@ export default function DashboardPage() {
     getStats().then(setStats);
   }, []);
 
-  if (!stats) return <p className="text-gray-500">Loading...</p>;
+  if (!stats) return <p className="text-muted-foreground">Loading...</p>;
 
   const cards = [
     { label: 'Total Articles', value: stats.articleCount },
@@ -24,12 +28,20 @@ export default function DashboardPage() {
     <div>
       <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        {cards.map((card) => (
-          <div key={card.label} className="bg-white border border-gray-200 p-4">
-            <p className="text-sm text-gray-500">{card.label}</p>
-            <p className="text-3xl font-bold mt-1">{card.value}</p>
-          </div>
-        ))}
+        {cards.map((card, i) => {
+          const Icon = icons[i];
+          return (
+            <Card key={card.label}>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">{card.label}</CardTitle>
+                <Icon className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <p className="text-3xl font-bold">{card.value}</p>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );

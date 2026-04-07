@@ -17,7 +17,7 @@ export default function NewArticlePage() {
     });
   }, []);
 
-  if (!loaded) return <p>Loading...</p>;
+  if (!loaded) return <p className="text-muted-foreground">Loading...</p>;
 
   return (
     <div>

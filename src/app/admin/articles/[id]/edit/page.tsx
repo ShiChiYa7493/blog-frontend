@@ -43,8 +43,8 @@ export default function EditArticlePage() {
     });
   }, [params.id]);
 
-  if (!loaded) return <p>Loading...</p>;
-  if (!article) return <p>Article not found</p>;
+  if (!loaded) return <p className="text-muted-foreground">Loading...</p>;
+  if (!article) return <p className="text-muted-foreground">Article not found</p>;
 
   return (
     <div>
