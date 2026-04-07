@@ -25,31 +25,45 @@ export function HomeCard() {
           transition={{ duration: 0.5, delay: 0.6, type: 'spring' }}
           className="flex justify-center mb-6"
         >
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-pink-300 to-purple-400 flex items-center justify-center text-white text-3xl font-bold shadow-lg ring-4 ring-white/30">
-            S
-          </div>
+          <img
+            src="/avatar.jpg"
+            alt="优川七夜"
+            className="w-24 h-24 rounded-full object-cover shadow-lg ring-4 ring-white/30"
+          />
         </motion.div>
 
         {/* Name */}
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="text-3xl font-bold text-center text-white mb-2"
-          style={{ fontFamily: "'Noto Serif SC', Georgia, serif" }}
+          className="text-center mb-4"
         >
-          Shichiya
-        </motion.h1>
+          <h1
+            className="text-3xl font-bold text-white"
+            style={{ fontFamily: "'Noto Serif SC', Georgia, serif" }}
+          >
+            优川七夜
+          </h1>
+          <p className="text-white/50 text-xs mt-1 tracking-widest uppercase">
+            Yuga Shichiya
+          </p>
+        </motion.div>
 
         {/* Tagline */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.0 }}
-          className="text-center text-white/70 text-sm mb-8"
+          className="text-center mb-8"
         >
-          Code & Dream ✦ Tech & Life
-        </motion.p>
+          <p className="text-white/90 text-sm font-medium italic">
+            今乗り越え 未来へと Weigh Anchor!
+          </p>
+          <p className="text-white/50 text-xs mt-1">
+            跨越现今，前往未来，起锚吧！
+          </p>
+        </motion.div>
 
         {/* Links */}
         <motion.div
