@@ -38,12 +38,12 @@ export function SakuraCanvas() {
       petals.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height - canvas.height,
-        size: Math.random() * 12 + 6,
+        size: Math.random() * 22 + 18,
         speedX: Math.random() * 1.5 - 0.5,
         speedY: Math.random() * 1.5 + 0.5,
         rotation: Math.random() * Math.PI * 2,
         rotationSpeed: (Math.random() - 0.5) * 0.02,
-        opacity: Math.random() * 0.5 + 0.3,
+        opacity: Math.random() * 0.4 + 0.5,
       });
     }
 
