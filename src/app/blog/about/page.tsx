@@ -1,6 +1,11 @@
+import type { Metadata } from 'next';
 import { PageBanner } from '@/components/PageBanner';
 import { PageTransition } from '@/components/PageTransition';
 import { User } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'About',
+};
 
 export default function AboutPage() {
   return (

@@ -8,7 +8,7 @@ import { PageBanner } from '@/components/PageBanner';
 import { PageTransition } from '@/components/PageTransition';
 
 export const metadata: Metadata = {
-  title: '图库',
+  title: 'Gallery',
 };
 
 export default async function GalleryPage() {

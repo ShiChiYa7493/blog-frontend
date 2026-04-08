@@ -6,8 +6,8 @@ import { ScrollToTop } from '@/components/ScrollToTop';
 
 export const metadata: Metadata = {
   title: {
-    default: '博客',
-    template: '%s | 优川七夜的博客',
+    default: 'Blog | 优川七夜',
+    template: '%s | 优川七夜',
   },
   description: '优川七夜的技术与生活博客',
 };

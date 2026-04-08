@@ -1,4 +1,9 @@
+import type { Metadata } from 'next';
 import { searchArticles } from '@/lib/api';
+
+export const metadata: Metadata = {
+  title: 'Search',
+};
 import ArticleCard from '@/components/ArticleCard';
 import Pagination from '@/components/Pagination';
 import { Input } from '@/components/ui/input';

@@ -1,5 +1,10 @@
+import type { Metadata } from 'next';
 import { getArticles } from "@/lib/api"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: 'Archives',
+};
 import { Separator } from "@/components/ui/separator"
 import { PageBanner } from "@/components/PageBanner"
 import { PageTransition } from "@/components/PageTransition"
