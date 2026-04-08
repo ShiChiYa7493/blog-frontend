@@ -1,6 +1,12 @@
+import type { Metadata } from 'next';
 import { SakuraCanvas } from '@/components/home/SakuraCanvas';
 import { ParallaxBackground } from '@/components/home/ParallaxBackground';
 import { HomeCard } from '@/components/home/HomeCard';
+
+export const metadata: Metadata = {
+  title: 'Weigh Anchor! | 优川七夜',
+  description: '今乗り越え 未来へと Weigh Anchor! — 跨越现今，前往未来，起锚吧！',
+};
 
 export default function HomePage() {
   return (
