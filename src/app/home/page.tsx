@@ -4,7 +4,7 @@ import { HomeCard } from '@/components/home/HomeCard';
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div className="relative min-h-screen flex items-end justify-center pb-12 md:pb-16 overflow-hidden">
       <ParallaxBackground />
       <SakuraCanvas />
       <HomeCard />
