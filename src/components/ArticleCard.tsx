@@ -40,7 +40,7 @@ export default function ArticleCard({ article, index = 0 }: { article: any; inde
   const readTime = estimateReadingTime(article.summary);
 
   return (
-    <Link href={`/blog/posts/${article.slug}`} className="block group">
+    <Link href={`/blog/posts/${article.id}`} className="block group">
       <div className="relative rounded-xl p-[1px] transition-all duration-500 bg-transparent group-hover:bg-gradient-to-br group-hover:from-primary/40 group-hover:via-primary/20 group-hover:to-transparent">
         <Card className="overflow-hidden border-border/50 group-hover:border-transparent hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full rounded-[11px]">
           {/* Cover image */}

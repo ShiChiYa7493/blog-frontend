@@ -85,10 +85,9 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
           <Input
             id="slug"
             type="text"
-            placeholder="Slug (URL路径)"
+            placeholder="Slug（可选，用于 SEO）"
             value={slug}
             onChange={(e) => setSlug(e.target.value)}
-            required
           />
         </div>
       </div>

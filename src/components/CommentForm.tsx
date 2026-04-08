@@ -5,8 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 
-export default function CommentForm({ slug, parentId, onSubmitted }: {
-  slug: string;
+export default function CommentForm({ articleId, parentId, onSubmitted }: {
+  articleId: string;
   parentId?: number;
   onSubmitted?: () => void;
 }) {
@@ -20,7 +20,7 @@ export default function CommentForm({ slug, parentId, onSubmitted }: {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const res = await fetch(`/api/articles/${slug}/comments`, {
+      const res = await fetch(`/api/articles/${articleId}/comments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nickname, email, content, parentId }),

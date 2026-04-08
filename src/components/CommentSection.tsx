@@ -16,10 +16,10 @@ interface Comment {
   replies?: Reply[];
 }
 
-export default async function CommentSection({ slug }: { slug: string }) {
+export default async function CommentSection({ articleId }: { articleId: string }) {
   let comments: Comment[] = [];
   try {
-    comments = await getComments(slug);
+    comments = await getComments(articleId);
   } catch {
     comments = [];
   }
@@ -50,7 +50,7 @@ export default async function CommentSection({ slug }: { slug: string }) {
         ))}
       </div>
       <h4 className="text-lg font-bold mb-4">发表评论</h4>
-      <CommentForm slug={slug} />
+      <CommentForm articleId={articleId} />
     </section>
   );
 }

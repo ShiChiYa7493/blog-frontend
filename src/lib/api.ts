@@ -22,8 +22,8 @@ export async function getArticles(params?: { page?: number; category?: string; t
   return fetchAPI(`/articles?${query}`);
 }
 
-export async function getArticle(slug: string) {
-  return fetchAPI(`/articles/${slug}`);
+export async function getArticle(id: string) {
+  return fetchAPI(`/articles/${id}`);
 }
 
 export async function getCategories() {
@@ -34,12 +34,12 @@ export async function getTags() {
   return fetchAPI('/tags');
 }
 
-export async function getComments(slug: string) {
-  return fetchAPI(`/articles/${slug}/comments`);
+export async function getComments(id: string) {
+  return fetchAPI(`/articles/${id}/comments`);
 }
 
-export async function postComment(slug: string, data: { nickname: string; email: string; content: string; parentId?: number }) {
-  return fetchAPI(`/articles/${slug}/comments`, {
+export async function postComment(id: string, data: { nickname: string; email: string; content: string; parentId?: number }) {
+  return fetchAPI(`/articles/${id}/comments`, {
     method: 'POST',
     body: JSON.stringify(data),
   });

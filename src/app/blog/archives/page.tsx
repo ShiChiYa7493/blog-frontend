@@ -11,7 +11,7 @@ import { PageTransition } from "@/components/PageTransition"
 import { Archive } from "lucide-react"
 
 interface Article {
-	id: number
+	id: string
 	slug: string
 	title: string
 	publishedAt: string
@@ -47,7 +47,7 @@ export default async function ArchivesPage() {
 									<time className="text-sm text-primary/50 w-24 shrink-0">
 										{new Date(article.publishedAt).toLocaleDateString("zh-CN", { month: "2-digit", day: "2-digit" })}
 									</time>
-									<Link href={`/blog/posts/${article.slug}`} className="hover:text-muted-foreground transition-colors">
+									<Link href={`/blog/posts/${article.id}`} className="hover:text-muted-foreground transition-colors">
 										{article.title}
 									</Link>
 								</li>

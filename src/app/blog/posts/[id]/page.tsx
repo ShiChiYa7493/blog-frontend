@@ -16,11 +16,11 @@ interface Tag {
   slug: string;
 }
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
+export default async function ArticlePage({ params }: { params: { id: string } }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let article: any;
   try {
-    article = await getArticle(params.slug);
+    article = await getArticle(params.id);
   } catch {
     notFound();
   }
@@ -35,7 +35,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
   try {
     const { data: articles } = await getArticles({ page: 1 });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const currentIndex = articles.findIndex((a: any) => a.slug === params.slug);
+    const currentIndex = articles.findIndex((a: any) => a.id === params.id);
     if (currentIndex > 0) nextArticle = articles[currentIndex - 1];
     if (currentIndex < articles.length - 1) prevArticle = articles[currentIndex + 1];
   } catch {}
@@ -146,7 +146,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           >
             {prevArticle ? (
               <Link
-                href={`/blog/posts/${prevArticle.slug}`}
+                href={`/blog/posts/${prevArticle.id}`}
                 className="group flex items-center gap-3 p-4 rounded-lg border border-border hover:border-primary/30 hover:bg-primary/5 transition-all"
               >
                 <ChevronLeft className="h-5 w-5 text-muted-foreground group-hover:text-primary shrink-0" />
@@ -158,7 +158,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
             ) : <div />}
             {nextArticle ? (
               <Link
-                href={`/blog/posts/${nextArticle.slug}`}
+                href={`/blog/posts/${nextArticle.id}`}
                 className="group flex items-center justify-end gap-3 p-4 rounded-lg border border-border hover:border-primary/30 hover:bg-primary/5 transition-all text-right"
               >
                 <div className="min-w-0">
@@ -172,7 +172,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         )}
 
         {/* Comments */}
-        <CommentSection slug={params.slug} />
+        <CommentSection articleId={params.id} />
       </article>
     </div>
   );

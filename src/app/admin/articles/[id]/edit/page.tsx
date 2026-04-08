@@ -26,10 +26,10 @@ export default function EditArticlePage() {
       fetch(`/api/admin/articles?page=1&limit=100`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       }).then(r => r.json()).then((data: AnyRecord) => {
-        const art = data.data?.find((a: AnyRecord) => a.id === Number(id));
+        const art = data.data?.find((a: AnyRecord) => a.id === id);
         if (art) {
-          // The list endpoint omits content, fetch full article by slug
-          return fetch(`/api/articles/${art.slug}`).then(r => r.json());
+          // The list endpoint omits content, fetch full article by id
+          return fetch(`/api/articles/${art.id}`).then(r => r.json());
         }
         return null;
       }),

@@ -22,7 +22,7 @@ export default function AdminArticlesPage() {
 
   useEffect(() => { load(); }, [load]);
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('确定删除这篇文章？')) return;
     await deleteArticle(id);
     toast.success('Article deleted');
