@@ -5,8 +5,8 @@ export function middleware(request: NextRequest) {
   const hostname = request.headers.get('host') || '';
   const { pathname } = request.nextUrl;
 
-  // In development, allow everything
-  if (hostname.includes('localhost') || hostname.includes('127.0.0.1')) {
+  // In development or IP access, allow everything
+  if (hostname.includes('localhost') || hostname.includes('127.0.0.1') || /^\d+\.\d+\.\d+\.\d+/.test(hostname)) {
     return NextResponse.next();
   }
 
