@@ -27,13 +27,13 @@ export default function AdminCommentsPage() {
   const load = useCallback(() => getAdminComments(page).then(setData), [page]);
   useEffect(() => { load(); }, [load]);
 
-  const handleStatus = async (id: number, status: string) => {
+  const handleStatus = async (id: string, status: string) => {
     await updateCommentStatus(id, status);
     toast.success(status === 'APPROVED' ? '评论已通过' : '评论已拒绝');
     load();
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('确定删除这条评论？')) return;
     await deleteComment(id);
     toast.success('评论已删除');

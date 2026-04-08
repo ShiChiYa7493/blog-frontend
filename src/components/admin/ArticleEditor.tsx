@@ -29,8 +29,8 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
   const [summary, setSummary] = useState(article?.summary || '');
   const [content, setContent] = useState(article?.content || '');
   const [coverImage, setCoverImage] = useState(article?.coverImage || '');
-  const [categoryId, setCategoryId] = useState<number>(article?.categoryId || categories[0]?.id || 0);
-  const [selectedTagIds, setSelectedTagIds] = useState<number[]>(article?.tags?.map((t: AnyRecord) => t.id) || []);
+  const [categoryId, setCategoryId] = useState<string>(article?.categoryId || categories[0]?.id || '');
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>(article?.tags?.map((t: AnyRecord) => t.id) || []);
   const [status, setStatus] = useState(article?.status || 'DRAFT');
   const [saving, setSaving] = useState(false);
 
@@ -41,7 +41,7 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
     setCoverImage(result.url);
   };
 
-  const toggleTag = (tagId: number) => {
+  const toggleTag = (tagId: string) => {
     setSelectedTagIds((prev) =>
       prev.includes(tagId) ? prev.filter((id) => id !== tagId) : [...prev, tagId]
     );
@@ -109,7 +109,7 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
           <select
             id="category"
             value={categoryId}
-            onChange={(e) => setCategoryId(Number(e.target.value))}
+            onChange={(e) => setCategoryId(e.target.value)}
             className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             {categories.map((cat) => (

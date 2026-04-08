@@ -16,7 +16,7 @@ export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<AnyRecord[]>([]);
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const load = () => getAdminCategories().then(setCategories);
   useEffect(() => { load(); }, []);
@@ -37,7 +37,7 @@ export default function AdminCategoriesPage() {
 
   const handleEdit = (cat: AnyRecord) => { setEditingId(cat.id); setName(cat.name); setSlug(cat.slug); };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('确定删除这个分类？')) return;
     await deleteCategory(id);
     toast.success('Category deleted');

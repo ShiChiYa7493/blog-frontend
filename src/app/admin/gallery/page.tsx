@@ -12,7 +12,7 @@ import { Upload, Trash2, Copy, Edit2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 type GalleryImage = {
-  id: number;
+  id: string;
   filename: string;
   url: string;
   title: string | null;
@@ -54,7 +54,7 @@ export default function AdminGalleryPage() {
     e.target.value = '';
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('确定删除这张图片？')) return;
     await deleteGalleryImage(id);
     toast.success('已删除');

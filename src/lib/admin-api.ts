@@ -50,15 +50,15 @@ export const updateArticle = (id: string, data: Record<string, unknown>) => admi
 export const deleteArticle = (id: string) => adminFetch(`/admin/articles/${id}`, { method: 'DELETE' });
 export const getAdminCategories = () => adminFetch('/categories');
 export const createCategory = (data: Record<string, unknown>) => adminFetch('/admin/categories', { method: 'POST', body: JSON.stringify(data) });
-export const updateCategory = (id: number, data: Record<string, unknown>) => adminFetch(`/admin/categories/${id}`, { method: 'PUT', body: JSON.stringify(data) });
-export const deleteCategory = (id: number) => adminFetch(`/admin/categories/${id}`, { method: 'DELETE' });
+export const updateCategory = (id: string, data: Record<string, unknown>) => adminFetch(`/admin/categories/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+export const deleteCategory = (id: string) => adminFetch(`/admin/categories/${id}`, { method: 'DELETE' });
 export const getAdminTags = () => adminFetch('/tags');
 export const createTag = (data: Record<string, unknown>) => adminFetch('/admin/tags', { method: 'POST', body: JSON.stringify(data) });
-export const updateTag = (id: number, data: Record<string, unknown>) => adminFetch(`/admin/tags/${id}`, { method: 'PUT', body: JSON.stringify(data) });
-export const deleteTag = (id: number) => adminFetch(`/admin/tags/${id}`, { method: 'DELETE' });
+export const updateTag = (id: string, data: Record<string, unknown>) => adminFetch(`/admin/tags/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+export const deleteTag = (id: string) => adminFetch(`/admin/tags/${id}`, { method: 'DELETE' });
 export const getAdminComments = (page = 1) => adminFetch(`/admin/comments?page=${page}`);
-export const updateCommentStatus = (id: number, status: string) => adminFetch(`/admin/comments/${id}`, { method: 'PUT', body: JSON.stringify({ status }) });
-export const deleteComment = (id: number) => adminFetch(`/admin/comments/${id}`, { method: 'DELETE' });
+export const updateCommentStatus = (id: string, status: string) => adminFetch(`/admin/comments/${id}`, { method: 'PUT', body: JSON.stringify({ status }) });
+export const deleteComment = (id: string) => adminFetch(`/admin/comments/${id}`, { method: 'DELETE' });
 export const getStats = () => adminFetch('/admin/stats');
 
 export async function uploadImage(file: File) {
@@ -90,8 +90,8 @@ export async function uploadGalleryImage(file: File) {
   return res.json();
 }
 
-export const updateGalleryImage = (id: number, data: { title?: string; description?: string }) =>
+export const updateGalleryImage = (id: string, data: { title?: string; description?: string }) =>
   adminFetch(`/admin/gallery/${id}`, { method: 'PUT', body: JSON.stringify(data) });
 
-export const deleteGalleryImage = (id: number) =>
+export const deleteGalleryImage = (id: string) =>
   adminFetch(`/admin/gallery/${id}`, { method: 'DELETE' });

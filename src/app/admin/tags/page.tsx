@@ -16,7 +16,7 @@ export default function AdminTagsPage() {
   const [tags, setTags] = useState<AnyRecord[]>([]);
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const load = () => getAdminTags().then(setTags);
   useEffect(() => { load(); }, []);
@@ -37,7 +37,7 @@ export default function AdminTagsPage() {
 
   const handleEdit = (tag: AnyRecord) => { setEditingId(tag.id); setName(tag.name); setSlug(tag.slug); };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('确定删除这个标签？')) return;
     await deleteTag(id);
     toast.success('Tag deleted');
