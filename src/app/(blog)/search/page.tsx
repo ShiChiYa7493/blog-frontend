@@ -23,7 +23,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
     <div>
       <h1 className="text-3xl font-bold mb-4">Search</h1>
       <form action="/search" method="GET" className="mb-8">
-        <Input type="text" name="q" defaultValue={q} placeholder="Search articles..." className="w-full max-w-lg text-lg h-12 px-4" />
+        <Input type="text" name="q" defaultValue={q} placeholder="Search articles..." className="w-full max-w-lg text-lg h-12 px-4 border-2 border-primary focus-visible:ring-primary" />
       </form>
       {q && (
         <p className="text-muted-foreground mb-6">{results.meta.total} results for &ldquo;{q}&rdquo;</p>

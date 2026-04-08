@@ -30,12 +30,12 @@ export default async function ArchivesPage() {
       <h1 className="text-3xl font-bold mb-8">Archives</h1>
       {years.map((year) => (
         <div key={year} className="mb-8">
-          <h2 className="text-xl font-bold mb-3">{year}</h2>
+          <h2 className="text-xl font-bold mb-3 text-primary">{year}</h2>
           <Separator className="mb-4" />
           <ul className="space-y-3">
             {grouped[year].map((article) => (
               <li key={article.id} className="flex items-baseline gap-4">
-                <time className="text-sm text-muted-foreground w-24 shrink-0">
+                <time className="text-sm text-primary/50 w-24 shrink-0">
                   {new Date(article.publishedAt).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' })}
                 </time>
                 <Link href={`/posts/${article.slug}`} className="hover:text-muted-foreground transition-colors">

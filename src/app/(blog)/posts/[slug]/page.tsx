@@ -30,7 +30,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         className="mb-8"
       >
         <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-muted-foreground mb-3">
-          <Link href={`/categories/${article.category?.slug}`} className="font-semibold text-foreground hover:text-muted-foreground">
+          <Link href={`/categories/${article.category?.slug}`} className="font-semibold text-primary hover:text-primary/70">
             {article.category?.name}
           </Link>
           <span>&middot;</span>
@@ -45,7 +45,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         <div className="flex flex-wrap gap-2 mt-3">
           {article.tags?.map((tag: Tag) => (
             <Link key={tag.id} href={`/tags/${tag.slug}`}>
-              <Badge variant="outline">{tag.name}</Badge>
+              <Badge variant="outline" className="border-primary/30">{tag.name}</Badge>
             </Link>
           ))}
         </div>

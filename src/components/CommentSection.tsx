@@ -26,10 +26,10 @@ export default async function CommentSection({ slug }: { slug: string }) {
 
   return (
     <section className="mt-12 border-t border-border pt-8">
-      <h3 className="text-xl font-bold mb-6">Comments ({comments.length})</h3>
+      <h3 className="text-xl font-bold mb-6">Comments (<span className="text-primary">{comments.length}</span>)</h3>
       <div className="space-y-6 mb-8">
         {comments.map((comment: Comment) => (
-          <div key={comment.id} className="border-l-2 border-border pl-4">
+          <div key={comment.id} className="border-l-2 border-primary/30 pl-4">
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
               <span className="font-medium text-foreground">{comment.nickname}</span>
               <span>&middot;</span>

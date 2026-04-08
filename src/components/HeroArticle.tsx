@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { MotionDiv } from '@/components/MotionDiv';
+import { Anchor } from 'lucide-react';
 
 export default function HeroArticle({ article }: { article: any }) {
   return (
@@ -29,7 +30,8 @@ export default function HeroArticle({ article }: { article: any }) {
 
           {/* Content overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-            <Badge variant="secondary" className="mb-3 bg-white/90 text-black dark:bg-white/90 dark:text-black">
+            <Badge variant="secondary" className="mb-3 bg-primary text-primary-foreground">
+              <Anchor className="h-3 w-3 mr-1" />
               FEATURED
             </Badge>
             <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-white/70 mb-2">

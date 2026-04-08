@@ -18,14 +18,14 @@ export default function ArticleCard({ article, index = 0 }: { article: any; inde
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50">
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
               <span className="text-muted-foreground/20 text-4xl font-serif">{article.title[0]}</span>
             </div>
           )}
         </div>
         <CardContent className="p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Badge variant="outline" className="text-[10px] uppercase tracking-wider">
+            <Badge variant="outline" className="text-[10px] uppercase tracking-wider border-primary/30 text-primary">
               {article.category?.name}
             </Badge>
             <span className="text-xs text-muted-foreground">

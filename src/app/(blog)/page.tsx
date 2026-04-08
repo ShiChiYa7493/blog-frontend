@@ -3,6 +3,7 @@ import { getArticles } from '@/lib/api';
 import HeroArticle from '@/components/HeroArticle';
 import ArticleCard from '@/components/ArticleCard';
 import { AnimatedCards, AnimatedCard } from '@/components/AnimatedCards';
+import { Anchor } from 'lucide-react';
 
 export default async function Home() {
   let articles: any[] = [];
@@ -32,7 +33,10 @@ export default async function Home() {
 
       {rest.length > 0 && (
         <section>
-          <h2 className="text-lg font-bold mb-6 uppercase tracking-wider text-muted-foreground">Latest</h2>
+          <h2 className="text-lg font-bold mb-6 uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+            Latest
+            <Anchor className="h-4 w-4 text-primary/40" />
+          </h2>
           <AnimatedCards>
             {rest.map((article: any, i: number) => (
               <AnimatedCard key={article.id}>
