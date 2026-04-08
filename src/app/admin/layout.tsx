@@ -10,7 +10,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import {
   LayoutDashboard, FileText, FolderOpen, Tags, MessageSquare,
-  Settings, ExternalLink, LogOut, Menu, Anchor,
+  Settings, ExternalLink, LogOut, Menu, Anchor, Images,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -20,6 +20,7 @@ const navItems = [
   { href: '/admin/categories', label: '分类', icon: FolderOpen },
   { href: '/admin/tags', label: '标签', icon: Tags },
   { href: '/admin/comments', label: '评论', icon: MessageSquare },
+  { href: '/admin/gallery', label: '图库', icon: Images },
   { href: '/admin/settings', label: '设置', icon: Settings },
 ];
 

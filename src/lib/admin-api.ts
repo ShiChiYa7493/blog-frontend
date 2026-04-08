@@ -73,3 +73,25 @@ export async function uploadImage(file: File) {
   if (!res.ok) throw new Error('Upload failed');
   return res.json();
 }
+
+// Gallery
+export const getGalleryImages = (page = 1, limit = 20) => adminFetch(`/gallery?page=${page}&limit=${limit}`);
+
+export async function uploadGalleryImage(file: File) {
+  const token = getToken();
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await fetch(`${API_BASE}/admin/gallery`, {
+    method: 'POST',
+    headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+    body: formData,
+  });
+  if (!res.ok) throw new Error('Upload failed');
+  return res.json();
+}
+
+export const updateGalleryImage = (id: number, data: { title?: string; description?: string }) =>
+  adminFetch(`/admin/gallery/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+
+export const deleteGalleryImage = (id: number) =>
+  adminFetch(`/admin/gallery/${id}`, { method: 'DELETE' });
