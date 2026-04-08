@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Anchor, Ship, Mail } from 'lucide-react';
 
 const links = [
-  { href: 'https://blog.shichiya.com', label: 'Blog', icon: Ship, external: false },
+  { href: '/blog', label: 'Blog', icon: Ship, external: false },
   { href: 'https://github.com/ShiChiYa7493', label: 'GitHub', icon: Anchor, external: true },
   { href: 'mailto:contact@shichiya.com', label: 'Email', icon: Mail, external: true },
 ];

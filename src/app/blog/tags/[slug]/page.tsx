@@ -35,7 +35,7 @@ export default async function TagPage({ params, searchParams }: { params: { slug
           </AnimatedCard>
         ))}
       </AnimatedCards>
-      <Pagination meta={meta} basePath={`/tags/${params.slug}`} />
+      <Pagination meta={meta} basePath={`/blog/tags/${params.slug}`} />
     </PageTransition>
   );
 }

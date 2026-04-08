@@ -10,42 +10,46 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // blog.shichiya.com → serve blog routes (existing behavior)
+  // blog.shichiya.com → rewrite to /blog routes
   if (hostname.startsWith('blog.')) {
-    // If someone visits blog.shichiya.com/home, redirect to blog root
-    if (pathname.startsWith('/home')) {
-      return NextResponse.redirect(new URL('/', request.url));
+    // Root of blog subdomain → show blog homepage
+    if (pathname === '/') {
+      return NextResponse.rewrite(new URL('/blog', request.url));
     }
-    return NextResponse.next();
+    // /blog/* already correct
+    if (pathname.startsWith('/blog')) {
+      return NextResponse.next();
+    }
+    // /admin stays as-is on blog subdomain
+    if (pathname.startsWith('/admin')) {
+      return NextResponse.next();
+    }
+    // Other paths on blog subdomain → prepend /blog
+    return NextResponse.rewrite(new URL(`/blog${pathname}`, request.url));
   }
 
-  // shichiya.com or www.shichiya.com → serve homepage
-  // Root path → rewrite to /home
+  // shichiya.com or www.shichiya.com
+  // Root → homepage (default, no rewrite needed since page.tsx is at root)
   if (pathname === '/') {
-    return NextResponse.rewrite(new URL('/home', request.url));
-  }
-
-  // /home/* routes are allowed on main domain
-  if (pathname.startsWith('/home')) {
     return NextResponse.next();
   }
 
-  // Future tool routes on shichiya.com (e.g., /image2video) are allowed
-  // Blog-specific routes on main domain → redirect to blog subdomain
-  const blogRoutes = ['/posts', '/categories', '/tags', '/archives', '/search', '/admin'];
-  if (blogRoutes.some(route => pathname.startsWith(route))) {
-    const blogUrl = new URL(pathname, request.url);
-    blogUrl.hostname = `blog.${hostname.replace('www.', '')}`;
-    return NextResponse.redirect(blogUrl);
+  // /blog/* allowed on main domain
+  if (pathname.startsWith('/blog')) {
+    return NextResponse.next();
   }
 
-  // Everything else (like /about) → allow on main domain
+  // /admin allowed on main domain
+  if (pathname.startsWith('/admin')) {
+    return NextResponse.next();
+  }
+
+  // Future tool routes (e.g., /image2video) allowed on main domain
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    // Match all paths except static files and api
     '/((?!api|_next/static|_next/image|favicon.ico|uploads).*)',
   ],
 };

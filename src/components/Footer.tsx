@@ -16,7 +16,7 @@ export default function Footer() {
 						<Link href="/api/rss" className="hover:text-foreground transition-colors">
 							RSS
 						</Link>
-						<Link href="/about" className="hover:text-foreground transition-colors">
+						<Link href="/blog/about" className="hover:text-foreground transition-colors">
 							About
 						</Link>
 					</div>

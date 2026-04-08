@@ -74,7 +74,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         >
           {/* Category + meta */}
           <div className="flex items-center gap-3 text-xs text-muted-foreground mb-4">
-            <Link href={`/categories/${article.category?.slug}`} className="font-semibold text-primary hover:text-primary/70 uppercase tracking-wider">
+            <Link href={`/blog/categories/${article.category?.slug}`} className="font-semibold text-primary hover:text-primary/70 uppercase tracking-wider">
               {article.category?.name}
             </Link>
             <span className="text-border">|</span>
@@ -105,7 +105,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           {article.tags?.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-4">
               {article.tags.map((tag: Tag) => (
-                <Link key={tag.id} href={`/tags/${tag.slug}`}>
+                <Link key={tag.id} href={`/blog/tags/${tag.slug}`}>
                   <Badge variant="outline" className="border-primary/30 hover:bg-primary/5">{tag.name}</Badge>
                 </Link>
               ))}
@@ -146,7 +146,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           >
             {prevArticle ? (
               <Link
-                href={`/posts/${prevArticle.slug}`}
+                href={`/blog/posts/${prevArticle.slug}`}
                 className="group flex items-center gap-3 p-4 rounded-lg border border-border hover:border-primary/30 hover:bg-primary/5 transition-all"
               >
                 <ChevronLeft className="h-5 w-5 text-muted-foreground group-hover:text-primary shrink-0" />
@@ -158,7 +158,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
             ) : <div />}
             {nextArticle ? (
               <Link
-                href={`/posts/${nextArticle.slug}`}
+                href={`/blog/posts/${nextArticle.slug}`}
                 className="group flex items-center justify-end gap-3 p-4 rounded-lg border border-border hover:border-primary/30 hover:bg-primary/5 transition-all text-right"
               >
                 <div className="min-w-0">

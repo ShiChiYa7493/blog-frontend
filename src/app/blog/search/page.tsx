@@ -26,7 +26,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
     <PageTransition>
       <div>
         <PageBanner title="搜索" subtitle="探索所有文章" icon={<SearchIcon className="h-7 w-7 text-primary" />} />
-        <form action="/search" method="GET" className="mb-8">
+        <form action="/blog/search" method="GET" className="mb-8">
           <Input type="text" name="q" defaultValue={q} placeholder="搜索文章..." className="w-full max-w-lg text-lg h-12 px-4 border-2 border-primary focus-visible:ring-primary" />
         </form>
         {q && (
@@ -37,7 +37,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
             <ArticleCard key={article.id} article={article} />
           ))}
         </div>
-        {q && <Pagination meta={results.meta} basePath={`/search?q=${encodeURIComponent(q)}`} />}
+        {q && <Pagination meta={results.meta} basePath={`/blog/search?q=${encodeURIComponent(q)}`} />}
       </div>
     </PageTransition>
   );

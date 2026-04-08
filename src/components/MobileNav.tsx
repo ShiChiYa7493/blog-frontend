@@ -21,7 +21,7 @@ export function MobileNav({ categories }: MobileNavProps) {
       </SheetTrigger>
       <SheetContent side="left" className="w-72">
         <div className="flex flex-col gap-4 mt-8">
-          <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-1.5 text-xl font-black tracking-tight">
+          <Link href="/blog" onClick={() => setOpen(false)} className="flex items-center gap-1.5 text-xl font-black tracking-tight">
             <Anchor className="h-4 w-4 text-primary" />
             SHICHIYA
           </Link>
@@ -30,7 +30,7 @@ export function MobileNav({ categories }: MobileNavProps) {
             {categories.map((cat) => (
               <Link
                 key={cat.id}
-                href={`/categories/${cat.slug}`}
+                href={`/blog/categories/${cat.slug}`}
                 onClick={() => setOpen(false)}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
@@ -38,17 +38,17 @@ export function MobileNav({ categories }: MobileNavProps) {
               </Link>
             ))}
             <Link
-              href="/gallery"
+              href="/blog/gallery"
               onClick={() => setOpen(false)}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               图库
             </Link>
             <Separator />
-            <Link href="/archives" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/blog/archives" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               归档
             </Link>
-            <Link href="/about" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/blog/about" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               关于
             </Link>
           </nav>

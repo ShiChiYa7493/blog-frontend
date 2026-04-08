@@ -35,7 +35,7 @@ export default async function CategoryPage({ params, searchParams }: { params: {
           </AnimatedCard>
         ))}
       </AnimatedCards>
-      <Pagination meta={meta} basePath={`/categories/${params.slug}`} />
+      <Pagination meta={meta} basePath={`/blog/categories/${params.slug}`} />
     </PageTransition>
   );
 }

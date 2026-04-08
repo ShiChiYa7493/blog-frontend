@@ -19,7 +19,7 @@ export default function HeroArticle({ article }: { article: any }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Link href={`/posts/${article.slug}`} className="block group">
+      <Link href={`/blog/posts/${article.slug}`} className="block group">
         <div className="relative aspect-[2.2/1] bg-muted rounded-lg overflow-hidden">
           {article.coverImage ? (
             <img
