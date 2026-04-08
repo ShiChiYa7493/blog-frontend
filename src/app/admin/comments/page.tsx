@@ -10,10 +10,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-function getStatusVariant(status: string): 'default' | 'secondary' | 'destructive' {
-  if (status === 'APPROVED') return 'default';
-  if (status === 'REJECTED') return 'destructive';
-  return 'secondary';
+function StatusBadge({ status }: { status: string }) {
+  if (status === 'APPROVED') {
+    return <Badge className="bg-primary/10 text-primary border-0">{status}</Badge>;
+  }
+  if (status === 'REJECTED') {
+    return <Badge variant="destructive">{status}</Badge>;
+  }
+  return <Badge variant="secondary">{status}</Badge>;
 }
 
 export default function AdminCommentsPage() {
@@ -49,7 +53,7 @@ export default function AdminCommentsPage() {
                 <div className="flex items-center gap-3">
                   <span className="font-medium">{comment.nickname}</span>
                   <span className="text-sm text-muted-foreground">{comment.email}</span>
-                  <Badge variant={getStatusVariant(comment.status)}>{comment.status}</Badge>
+                  <StatusBadge status={comment.status} />
                 </div>
                 <span className="text-sm text-muted-foreground">
                   {new Date(comment.createdAt).toLocaleString('zh-CN')}

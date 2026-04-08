@@ -10,7 +10,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import {
   LayoutDashboard, FileText, FolderOpen, Tags, MessageSquare,
-  Settings, ExternalLink, LogOut, Menu,
+  Settings, ExternalLink, LogOut, Menu, Anchor,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -27,7 +27,8 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
   return (
     <div className="flex flex-col h-full">
       <div className="p-4">
-        <Link href="/admin" className="text-lg font-bold" onClick={onNavigate}>
+        <Link href="/admin" className="flex items-center gap-2 text-lg font-bold" onClick={onNavigate}>
+          <Anchor className="h-5 w-5 text-primary" />
           Admin Panel
         </Link>
       </div>

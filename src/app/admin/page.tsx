@@ -37,7 +37,7 @@ export default function DashboardPage() {
                 <Icon className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold">{card.value}</p>
+                <p className="text-3xl font-bold text-primary">{card.value}</p>
               </CardContent>
             </Card>
           );

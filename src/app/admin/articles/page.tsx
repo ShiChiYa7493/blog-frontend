@@ -55,9 +55,11 @@ export default function AdminArticlesPage() {
                 <TableCell className="font-medium">{article.title}</TableCell>
                 <TableCell className="text-muted-foreground">{article.category?.name}</TableCell>
                 <TableCell>
-                  <Badge variant={article.status === 'PUBLISHED' ? 'default' : 'secondary'}>
-                    {article.status}
-                  </Badge>
+                  {article.status === 'PUBLISHED' ? (
+                    <Badge className="bg-primary/10 text-primary border-0">{article.status}</Badge>
+                  ) : (
+                    <Badge variant="secondary">{article.status}</Badge>
+                  )}
                 </TableCell>
                 <TableCell className="text-muted-foreground">{article.viewCount}</TableCell>
                 <TableCell className="text-muted-foreground">
