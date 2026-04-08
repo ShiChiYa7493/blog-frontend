@@ -3,9 +3,16 @@
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { MotionDiv } from '@/components/MotionDiv';
-import { Anchor } from 'lucide-react';
+import { Anchor, Clock } from 'lucide-react';
+
+function estimateReadingTime(summary?: string): string {
+  if (!summary) return '1';
+  const chars = summary.length;
+  return String(Math.max(1, Math.ceil(chars / 50)));
+}
 
 export default function HeroArticle({ article }: { article: any }) {
+  const readTime = estimateReadingTime(article.summary);
   return (
     <MotionDiv
       initial={{ opacity: 0, y: 20 }}
@@ -38,6 +45,8 @@ export default function HeroArticle({ article }: { article: any }) {
               <span className="font-semibold text-white">{article.category?.name}</span>
               <span>&middot;</span>
               <time>{new Date(article.publishedAt).toLocaleDateString('zh-CN')}</time>
+              <span>&middot;</span>
+              <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> 约 {readTime} 分钟</span>
             </div>
             <h2 className="text-2xl md:text-4xl font-bold leading-tight text-white group-hover:text-white/90 transition-colors">
               {article.title}
