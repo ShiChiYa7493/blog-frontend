@@ -4,7 +4,7 @@ import { ParallaxBackground } from '@/components/home/ParallaxBackground';
 import { HomeCard } from '@/components/home/HomeCard';
 
 export const metadata: Metadata = {
-  title: 'Weigh Anchor! | 优川七夜',
+  title: 'Weigh Anchor!',
   description: '今乗り越え 未来へと Weigh Anchor! — 跨越现今，前往未来，起锚吧！',
 };
 
