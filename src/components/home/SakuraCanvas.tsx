@@ -71,18 +71,34 @@ export function SakuraCanvas() {
       });
     }
 
-    // 20 snowflakes / ice crystals
-    for (let i = 0; i < 20; i++) {
+    // 15 snowflakes (large, visible)
+    for (let i = 0; i < 15; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height - canvas.height,
-        size: Math.random() * 4 + 2,
+        size: Math.random() * 10 + 10,
         speedX: Math.random() * 0.8 - 0.4,
-        speedY: Math.random() * 0.6 + 0.3,
+        speedY: Math.random() * 0.5 + 0.2,
         rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.01,
-        opacity: Math.random() * 0.4 + 0.3,
-        type: Math.random() > 0.5 ? 'snowflake' : 'ice',
+        rotationSpeed: (Math.random() - 0.5) * 0.008,
+        opacity: Math.random() * 0.3 + 0.6,
+        type: 'snowflake',
+        color: '#FFFFFF',
+      });
+    }
+
+    // 10 ice crystals (glowing orbs)
+    for (let i = 0; i < 10; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        size: Math.random() * 8 + 6,
+        speedX: Math.random() * 0.6 - 0.3,
+        speedY: Math.random() * 0.4 + 0.15,
+        rotation: 0,
+        rotationSpeed: 0,
+        opacity: Math.random() * 0.3 + 0.5,
+        type: 'ice',
         color: '#FFFFFF',
       });
     }
@@ -135,23 +151,47 @@ export function SakuraCanvas() {
       ctx.rotate(p.rotation);
       ctx.globalAlpha = p.opacity;
 
-      // Simple snowflake: 6-arm star
-      ctx.strokeStyle = 'rgba(200, 220, 255, 0.8)';
-      ctx.lineWidth = 1;
-      ctx.fillStyle = 'rgba(220, 235, 255, 0.6)';
+      // Outer glow
+      const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, p.size * 1.5);
+      glow.addColorStop(0, 'rgba(200, 225, 255, 0.3)');
+      glow.addColorStop(1, 'rgba(200, 225, 255, 0)');
+      ctx.beginPath();
+      ctx.fillStyle = glow;
+      ctx.arc(0, 0, p.size * 1.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 6-arm snowflake
+      ctx.strokeStyle = 'rgba(220, 235, 255, 0.9)';
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
 
       for (let i = 0; i < 6; i++) {
         ctx.beginPath();
         ctx.moveTo(0, 0);
         ctx.lineTo(0, -p.size);
-        // Small branches
-        ctx.moveTo(0, -p.size * 0.5);
-        ctx.lineTo(p.size * 0.3, -p.size * 0.7);
-        ctx.moveTo(0, -p.size * 0.5);
-        ctx.lineTo(-p.size * 0.3, -p.size * 0.7);
         ctx.stroke();
+        // Branches
+        ctx.beginPath();
+        ctx.moveTo(0, -p.size * 0.45);
+        ctx.lineTo(p.size * 0.3, -p.size * 0.65);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, -p.size * 0.45);
+        ctx.lineTo(-p.size * 0.3, -p.size * 0.65);
+        ctx.stroke();
+        // Tip dot
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(220, 235, 255, 0.9)';
+        ctx.arc(0, -p.size, 1.5, 0, Math.PI * 2);
+        ctx.fill();
         ctx.rotate(Math.PI / 3);
       }
+
+      // Center dot
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.arc(0, 0, 2, 0, Math.PI * 2);
+      ctx.fill();
 
       ctx.restore();
     };
@@ -161,14 +201,23 @@ export function SakuraCanvas() {
       ctx.translate(p.x, p.y);
       ctx.globalAlpha = p.opacity;
 
-      // Glowing ice crystal dot
-      const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, p.size);
-      gradient.addColorStop(0, 'rgba(180, 210, 255, 0.9)');
-      gradient.addColorStop(0.5, 'rgba(180, 210, 255, 0.3)');
-      gradient.addColorStop(1, 'rgba(180, 210, 255, 0)');
-
+      // Outer glow
+      const outerGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, p.size * 2.5);
+      outerGlow.addColorStop(0, 'rgba(150, 200, 255, 0.4)');
+      outerGlow.addColorStop(0.5, 'rgba(150, 200, 255, 0.1)');
+      outerGlow.addColorStop(1, 'rgba(150, 200, 255, 0)');
       ctx.beginPath();
-      ctx.fillStyle = gradient;
+      ctx.fillStyle = outerGlow;
+      ctx.arc(0, 0, p.size * 2.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Core glow
+      const coreGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, p.size);
+      coreGlow.addColorStop(0, 'rgba(200, 230, 255, 0.95)');
+      coreGlow.addColorStop(0.4, 'rgba(180, 215, 255, 0.5)');
+      coreGlow.addColorStop(1, 'rgba(180, 215, 255, 0)');
+      ctx.beginPath();
+      ctx.fillStyle = coreGlow;
       ctx.arc(0, 0, p.size, 0, Math.PI * 2);
       ctx.fill();
 
