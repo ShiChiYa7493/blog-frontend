@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { BookOpen, GitBranch, Mail } from 'lucide-react';
+import { Anchor, Ship, Mail } from 'lucide-react';
 
 const links = [
-  { href: 'https://blog.shichiya.com', label: 'Blog', icon: BookOpen, external: false },
-  { href: 'https://github.com/ShiChiYa7493', label: 'GitHub', icon: GitBranch, external: true },
+  { href: 'https://blog.shichiya.com', label: 'Blog', icon: Ship, external: false },
+  { href: 'https://github.com/ShiChiYa7493', label: 'GitHub', icon: Anchor, external: true },
   { href: 'mailto:contact@shichiya.com', label: 'Email', icon: Mail, external: true },
 ];
 
@@ -17,7 +17,7 @@ export function HomeCard() {
       transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
       className="relative z-20 w-full max-w-md mx-auto px-4"
     >
-      <div className="backdrop-blur-xl bg-white/15 dark:bg-black/20 border border-white/20 dark:border-white/10 rounded-2xl p-8 shadow-2xl">
+      <div className="backdrop-blur-xl bg-white/15 dark:bg-black/20 border border-blue-200/30 dark:border-blue-400/20 rounded-2xl p-8 shadow-2xl shadow-blue-900/10">
         {/* Avatar */}
         <motion.div
           initial={{ scale: 0 }}
@@ -28,7 +28,7 @@ export function HomeCard() {
           <img
             src="/avatar.jpg"
             alt="优川七夜"
-            className="w-24 h-24 rounded-full object-cover shadow-lg ring-4 ring-white/30"
+            className="w-24 h-24 rounded-full object-cover shadow-lg ring-4 ring-blue-200/40 dark:ring-blue-400/30"
           />
         </motion.div>
 
@@ -45,7 +45,7 @@ export function HomeCard() {
           >
             优川七夜
           </h1>
-          <p className="text-white/50 text-xs mt-1 tracking-widest uppercase">
+          <p className="text-blue-100/60 text-xs mt-1 tracking-widest uppercase">
             Yuga Shichiya
           </p>
         </motion.div>
@@ -60,9 +60,21 @@ export function HomeCard() {
           <p className="text-white/90 text-sm font-medium italic">
             今乗り越え 未来へと Weigh Anchor!
           </p>
-          <p className="text-white/50 text-xs mt-1">
+          <p className="text-blue-100/50 text-xs mt-1">
             跨越现今，前往未来，起锚吧！
           </p>
+        </motion.div>
+
+        {/* Anchor divider */}
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ delay: 1.1 }}
+          className="flex items-center gap-3 mb-6"
+        >
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-blue-200/30 to-transparent" />
+          <Anchor className="h-3 w-3 text-blue-200/50" />
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-blue-200/30 to-transparent" />
         </motion.div>
 
         {/* Links */}
@@ -80,7 +92,7 @@ export function HomeCard() {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 dark:bg-white/5 dark:hover:bg-white/15 border border-white/10 text-white text-sm font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+                className="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl bg-blue-50/10 hover:bg-blue-100/20 dark:bg-blue-900/10 dark:hover:bg-blue-800/20 border border-blue-200/20 hover:border-blue-300/40 text-white text-sm font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/10"
               >
                 <Icon className="h-4 w-4" />
                 {link.label}
