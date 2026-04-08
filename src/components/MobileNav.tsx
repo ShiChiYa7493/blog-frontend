@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Menu } from 'lucide-react';
+import { Menu, Anchor } from 'lucide-react';
 
 interface MobileNavProps {
   categories: { id: number; name: string; slug: string }[];
@@ -21,7 +21,8 @@ export function MobileNav({ categories }: MobileNavProps) {
       </SheetTrigger>
       <SheetContent side="left" className="w-72">
         <div className="flex flex-col gap-4 mt-8">
-          <Link href="/" onClick={() => setOpen(false)} className="text-xl font-black tracking-tight">
+          <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-1.5 text-xl font-black tracking-tight">
+            <Anchor className="h-4 w-4 text-primary" />
             SHICHIYA
           </Link>
           <Separator />
