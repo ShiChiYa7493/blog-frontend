@@ -14,7 +14,7 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} 优川七夜. Weigh Anchor!</p>
           <div className="flex gap-6">
             <Link href="/api/rss" className="hover:text-foreground transition-colors">RSS</Link>
-            <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
+            <Link href="/about" className="hover:text-foreground transition-colors">关于</Link>
           </div>
         </div>
       </div>

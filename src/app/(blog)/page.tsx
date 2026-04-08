@@ -17,8 +17,8 @@ export default async function Home() {
   if (!articles || articles.length === 0) {
     return (
       <div className="text-center py-20 text-muted-foreground">
-        <p className="text-xl">No articles yet</p>
-        <p className="text-sm mt-2">Start writing from the admin panel.</p>
+        <p className="text-xl">暂无文章</p>
+        <p className="text-sm mt-2">前往管理后台开始写作</p>
       </div>
     );
   }
@@ -34,7 +34,7 @@ export default async function Home() {
       {rest.length > 0 && (
         <section>
           <h2 className="text-lg font-bold mb-6 uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-            Latest
+            最新文章
             <Anchor className="h-4 w-4 text-primary/40" />
           </h2>
           <AnimatedCards>

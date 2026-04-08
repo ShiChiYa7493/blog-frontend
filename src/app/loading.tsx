@@ -14,7 +14,7 @@ export default function Loading() {
           <span className="w-2 h-2 bg-blue-400/60 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
           <span className="w-2 h-2 bg-blue-400/60 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
         </div>
-        <span className="text-sm">Loading...</span>
+        <span className="text-sm">加载中...</span>
       </div>
     </div>
   );

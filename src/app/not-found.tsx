@@ -14,13 +14,13 @@ export default function NotFound() {
         Страница не найдена...
       </p>
       <p className="text-sm text-muted-foreground/60 mb-8">
-        This page seems to have drifted away.
+        这个页面似乎漂走了...
       </p>
       <Link
         href="/"
         className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
       >
-        Return Home
+        返回首页
       </Link>
     </div>
   );

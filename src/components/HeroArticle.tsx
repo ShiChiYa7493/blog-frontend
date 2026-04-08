@@ -32,7 +32,7 @@ export default function HeroArticle({ article }: { article: any }) {
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
             <Badge variant="secondary" className="mb-3 bg-primary text-primary-foreground">
               <Anchor className="h-3 w-3 mr-1" />
-              FEATURED
+              推荐
             </Badge>
             <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-white/70 mb-2">
               <span className="font-semibold text-white">{article.category?.name}</span>

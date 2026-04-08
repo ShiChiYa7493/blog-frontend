@@ -15,7 +15,7 @@ export default function Pagination({ meta, basePath }: {
           href={`${basePath}${basePath.includes('?') ? '&' : '?'}page=${meta.page - 1}`}
           className={cn(buttonVariants({ variant: 'outline', size: 'default' }))}
         >
-          Previous
+          上一页
         </Link>
       )}
       <span className="px-4 py-2 text-sm text-muted-foreground">{meta.page} / {meta.totalPages}</span>
@@ -24,7 +24,7 @@ export default function Pagination({ meta, basePath }: {
           href={`${basePath}${basePath.includes('?') ? '&' : '?'}page=${meta.page + 1}`}
           className={cn(buttonVariants({ variant: 'outline', size: 'default' }))}
         >
-          Next
+          下一页
         </Link>
       )}
     </div>

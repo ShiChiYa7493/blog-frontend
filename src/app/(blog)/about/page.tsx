@@ -4,7 +4,7 @@ export default function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="flex items-center gap-3 mb-8">
-        <h1 className="text-3xl font-bold">About</h1>
+        <h1 className="text-3xl font-bold">关于</h1>
         <Anchor className="h-5 w-5 text-primary/40" />
       </div>
       <div className="prose prose-lg max-w-none dark:prose-invert">

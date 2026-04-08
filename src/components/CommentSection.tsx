@@ -26,7 +26,7 @@ export default async function CommentSection({ slug }: { slug: string }) {
 
   return (
     <section className="mt-12 border-t border-border pt-8">
-      <h3 className="text-xl font-bold mb-6">Comments (<span className="text-primary">{comments.length}</span>)</h3>
+      <h3 className="text-xl font-bold mb-6">评论 (<span className="text-primary">{comments.length}</span>)</h3>
       <div className="space-y-6 mb-8">
         {comments.map((comment: Comment) => (
           <div key={comment.id} className="border-l-2 border-primary/30 pl-4">
@@ -49,7 +49,7 @@ export default async function CommentSection({ slug }: { slug: string }) {
           </div>
         ))}
       </div>
-      <h4 className="text-lg font-bold mb-4">Leave a Comment</h4>
+      <h4 className="text-lg font-bold mb-4">发表评论</h4>
       <CommentForm slug={slug} />
     </section>
   );

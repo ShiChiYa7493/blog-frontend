@@ -15,12 +15,12 @@ import {
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/articles', label: 'Articles', icon: FileText },
-  { href: '/admin/categories', label: 'Categories', icon: FolderOpen },
-  { href: '/admin/tags', label: 'Tags', icon: Tags },
-  { href: '/admin/comments', label: 'Comments', icon: MessageSquare },
-  { href: '/admin/settings', label: 'Settings', icon: Settings },
+  { href: '/admin', label: '仪表盘', icon: LayoutDashboard },
+  { href: '/admin/articles', label: '文章', icon: FileText },
+  { href: '/admin/categories', label: '分类', icon: FolderOpen },
+  { href: '/admin/tags', label: '标签', icon: Tags },
+  { href: '/admin/comments', label: '评论', icon: MessageSquare },
+  { href: '/admin/settings', label: '设置', icon: Settings },
 ];
 
 function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
@@ -29,7 +29,7 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
       <div className="p-4">
         <Link href="/admin" className="flex items-center gap-2 text-lg font-bold" onClick={onNavigate}>
           <Anchor className="h-5 w-5 text-primary" />
-          Admin Panel
+          管理面板
         </Link>
       </div>
       <Separator />
@@ -63,14 +63,14 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
           className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted"
         >
           <ExternalLink className="h-4 w-4" />
-          View Site
+          访问网站
         </Link>
         <button
           onClick={logout}
           className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted w-full text-left"
         >
           <LogOut className="h-4 w-4" />
-          Logout
+          退出登录
         </button>
       </div>
     </div>
@@ -98,7 +98,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <SidebarContent pathname={pathname} onNavigate={() => setMobileOpen(false)} />
             </SheetContent>
           </Sheet>
-          <span className="font-bold">Admin</span>
+          <span className="font-bold">管理</span>
           <ThemeToggle />
         </div>
 

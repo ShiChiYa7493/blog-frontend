@@ -43,12 +43,12 @@ export default function EditArticlePage() {
     });
   }, [params.id]);
 
-  if (!loaded) return <p className="text-muted-foreground">Loading...</p>;
-  if (!article) return <p className="text-muted-foreground">Article not found</p>;
+  if (!loaded) return <p className="text-muted-foreground">加载中...</p>;
+  if (!article) return <p className="text-muted-foreground">文章未找到</p>;
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Edit Article</h1>
+      <h1 className="text-2xl font-bold mb-6">编辑文章</h1>
       <ArticleEditor article={article} categories={categories} tags={tags} />
     </div>
   );

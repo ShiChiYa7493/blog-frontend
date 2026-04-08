@@ -27,7 +27,7 @@ export default async function ArchivesPage() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8">Archives</h1>
+      <h1 className="text-3xl font-bold mb-8">归档</h1>
       {years.map((year) => (
         <div key={year} className="mb-8">
           <h2 className="text-xl font-bold mb-3 text-primary">{year}</h2>

@@ -26,14 +26,14 @@ export default function CommentForm({ slug, parentId, onSubmitted }: {
         body: JSON.stringify({ nickname, email, content, parentId }),
       });
       if (res.ok) {
-        setMessage('Comment submitted, awaiting review.');
+        setMessage('评论已提交，等待审核');
         setContent('');
         onSubmitted?.();
       } else {
-        setMessage('Failed to submit comment.');
+        setMessage('评论提交失败');
       }
     } catch {
-      setMessage('Failed to submit comment.');
+      setMessage('评论提交失败');
     }
     setSubmitting(false);
   };
@@ -41,13 +41,13 @@ export default function CommentForm({ slug, parentId, onSubmitted }: {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <Input type="text" placeholder="Nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} required />
-        <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <Input type="text" placeholder="昵称" value={nickname} onChange={(e) => setNickname(e.target.value)} required />
+        <Input type="email" placeholder="邮箱" value={email} onChange={(e) => setEmail(e.target.value)} required />
       </div>
-      <Textarea placeholder="Write a comment..." value={content} onChange={(e) => setContent(e.target.value)} required rows={4} className="w-full" />
+      <Textarea placeholder="写下你的评论..." value={content} onChange={(e) => setContent(e.target.value)} required rows={4} className="w-full" />
       <div className="flex items-center gap-4">
         <Button type="submit" disabled={submitting}>
-          {submitting ? 'Submitting...' : 'Submit'}
+          {submitting ? '提交中...' : '提交'}
         </Button>
         {message && <span className="text-sm text-muted-foreground">{message}</span>}
       </div>

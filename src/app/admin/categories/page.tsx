@@ -38,7 +38,7 @@ export default function AdminCategoriesPage() {
   const handleEdit = (cat: AnyRecord) => { setEditingId(cat.id); setName(cat.name); setSlug(cat.slug); };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Delete this category?')) return;
+    if (!confirm('确定删除这个分类？')) return;
     await deleteCategory(id);
     toast.success('Category deleted');
     load();
@@ -46,14 +46,14 @@ export default function AdminCategoriesPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Categories</h1>
+      <h1 className="text-2xl font-bold mb-6">分类管理</h1>
       <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
-        <Input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required className="max-w-[200px]" />
+        <Input type="text" placeholder="名称" value={name} onChange={(e) => setName(e.target.value)} required className="max-w-[200px]" />
         <Input type="text" placeholder="Slug" value={slug} onChange={(e) => setSlug(e.target.value)} required className="max-w-[200px]" />
-        <Button type="submit">{editingId ? 'Update' : 'Add'}</Button>
+        <Button type="submit">{editingId ? '更新' : '添加'}</Button>
         {editingId && (
           <Button type="button" variant="outline" onClick={() => { setEditingId(null); setName(''); setSlug(''); }}>
-            Cancel
+            取消
           </Button>
         )}
       </form>
@@ -61,10 +61,10 @@ export default function AdminCategoriesPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
+              <TableHead>名称</TableHead>
               <TableHead>Slug</TableHead>
-              <TableHead>Articles</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead>文章数</TableHead>
+              <TableHead>操作</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -75,8 +75,8 @@ export default function AdminCategoriesPage() {
                 <TableCell>{cat._count?.articles || 0}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={() => handleEdit(cat)}>Edit</Button>
-                    <Button variant="destructive" size="sm" onClick={() => handleDelete(cat.id)}>Delete</Button>
+                    <Button variant="outline" size="sm" onClick={() => handleEdit(cat)}>编辑</Button>
+                    <Button variant="destructive" size="sm" onClick={() => handleDelete(cat.id)}>删除</Button>
                   </div>
                 </TableCell>
               </TableRow>

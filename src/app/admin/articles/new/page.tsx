@@ -17,11 +17,11 @@ export default function NewArticlePage() {
     });
   }, []);
 
-  if (!loaded) return <p className="text-muted-foreground">Loading...</p>;
+  if (!loaded) return <p className="text-muted-foreground">加载中...</p>;
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">New Article</h1>
+      <h1 className="text-2xl font-bold mb-6">新建文章</h1>
       <ArticleEditor categories={categories} tags={tags} />
     </div>
   );

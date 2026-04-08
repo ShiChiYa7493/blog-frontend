@@ -24,7 +24,7 @@ export default function LoginPage() {
       await login(username, password);
       router.push('/admin');
     } catch {
-      setError('Invalid username or password');
+      setError('用户名或密码错误');
     }
     setLoading(false);
   };
@@ -36,36 +36,36 @@ export default function LoginPage() {
           <CardHeader>
             <CardTitle className="text-2xl text-center flex items-center justify-center gap-2">
                 <Anchor className="h-6 w-6 text-primary" />
-                Admin Login
+                管理登录
               </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && <p className="text-destructive text-sm">{error}</p>}
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username">用户名</Label>
                 <Input
                   id="username"
                   type="text"
-                  placeholder="Username"
+                  placeholder="用户名"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">密码</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder="密码"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
               <Button type="submit" disabled={loading} className="w-full">
-                {loading ? 'Logging in...' : 'Login'}
+                {loading ? '登录中...' : '登录'}
               </Button>
             </form>
           </CardContent>

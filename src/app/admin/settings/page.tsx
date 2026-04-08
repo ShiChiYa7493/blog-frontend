@@ -26,7 +26,7 @@ export default function AdminSettingsPage() {
     if (!file) return;
     const result = await uploadImage(file);
     setAvatar(result.url);
-    toast.success('Avatar uploaded');
+    toast.success('头像已上传');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,12 +36,12 @@ export default function AdminSettingsPage() {
     if (password) data.password = password;
     await updateProfile(data);
     setPassword('');
-    toast.success('Settings saved');
+    toast.success('设置已保存');
   };
 
   return (
     <div className="max-w-lg">
-      <h1 className="text-2xl font-bold mb-6">Settings</h1>
+      <h1 className="text-2xl font-bold mb-6">个人设置</h1>
       <Card>
         <CardHeader>
           <CardTitle>Profile</CardTitle>
@@ -49,7 +49,7 @@ export default function AdminSettingsPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label>Avatar</Label>
+              <Label>头像</Label>
               {avatar && (
                 <Image src={avatar} alt="avatar" width={64} height={64} className="w-16 h-16 rounded-full mb-2" />
               )}
@@ -61,7 +61,7 @@ export default function AdminSettingsPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="nickname">Nickname</Label>
+              <Label htmlFor="nickname">昵称</Label>
               <Input
                 id="nickname"
                 type="text"
@@ -70,8 +70,7 @@ export default function AdminSettingsPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">New Password</Label>
-              <p className="text-xs text-muted-foreground">Leave blank to keep current password</p>
+              <Label htmlFor="password">新密码（留空则不修改）</Label>
               <Input
                 id="password"
                 type="password"
@@ -79,7 +78,7 @@ export default function AdminSettingsPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <Button type="submit">Save</Button>
+            <Button type="submit">保存</Button>
           </form>
         </CardContent>
       </Card>

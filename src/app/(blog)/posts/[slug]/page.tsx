@@ -36,7 +36,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           <span>&middot;</span>
           <time>{new Date(article.publishedAt || article.createdAt).toLocaleDateString('zh-CN')}</time>
           <span>&middot;</span>
-          <span>{article.viewCount} views</span>
+          <span>{article.viewCount} 阅读</span>
         </div>
         <h1 className="text-4xl font-bold leading-tight mb-4">{article.title}</h1>
         {article.summary && (

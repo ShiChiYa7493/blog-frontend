@@ -54,14 +54,14 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
     try {
       if (article) {
         await updateArticle(article.id, data);
-        toast.success('Article updated');
+        toast.success('文章保存成功');
       } else {
         await createArticle(data);
-        toast.success('Article created');
+        toast.success('文章保存成功');
       }
       router.push('/admin/articles');
     } catch {
-      toast.error('Failed to save article');
+      toast.error('保存文章失败');
     }
     setSaving(false);
   };
@@ -70,11 +70,11 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1">
-          <Label htmlFor="title">Title</Label>
+          <Label htmlFor="title">标题</Label>
           <Input
             id="title"
             type="text"
-            placeholder="Title"
+            placeholder="标题"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -85,7 +85,7 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
           <Input
             id="slug"
             type="text"
-            placeholder="Slug (URL-safe)"
+            placeholder="Slug (URL路径)"
             value={slug}
             onChange={(e) => setSlug(e.target.value)}
             required
@@ -94,11 +94,11 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="summary">Summary</Label>
+        <Label htmlFor="summary">摘要</Label>
         <Input
           id="summary"
           type="text"
-          placeholder="Summary (optional)"
+          placeholder="摘要（可选）"
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
         />
@@ -126,12 +126,12 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
             onChange={(e) => setStatus(e.target.value)}
             className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
-            <option value="DRAFT">Draft</option>
-            <option value="PUBLISHED">Published</option>
+            <option value="DRAFT">草稿</option>
+            <option value="PUBLISHED">已发布</option>
           </select>
         </div>
         <div className="space-y-1">
-          <Label>Cover Image</Label>
+          <Label>封面：</Label>
           <input
             type="file"
             accept="image/*"
@@ -144,7 +144,7 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
       {coverImage && (
         <div className="flex items-center gap-2">
           <Image src={coverImage} alt="cover" width={64} height={64} className="h-16 w-auto rounded" />
-          <Button type="button" variant="destructive" size="sm" onClick={() => setCoverImage('')}>Remove</Button>
+          <Button type="button" variant="destructive" size="sm" onClick={() => setCoverImage('')}>移除</Button>
         </div>
       )}
 
@@ -175,9 +175,9 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
 
       <div className="flex gap-4">
         <Button type="submit" disabled={saving}>
-          {saving ? 'Saving...' : article ? 'Update' : 'Create'}
+          {saving ? '保存中...' : article ? '更新' : '创建'}
         </Button>
-        <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
+        <Button type="button" variant="outline" onClick={() => router.back()}>取消</Button>
       </div>
     </form>
   );

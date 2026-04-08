@@ -39,10 +39,10 @@ export function MobileNav({ categories }: MobileNavProps) {
             ))}
             <Separator />
             <Link href="/archives" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Archives
+              归档
             </Link>
             <Link href="/about" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              About
+              关于
             </Link>
           </nav>
         </div>

@@ -21,12 +21,12 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4">Search</h1>
+      <h1 className="text-3xl font-bold mb-4">搜索</h1>
       <form action="/search" method="GET" className="mb-8">
-        <Input type="text" name="q" defaultValue={q} placeholder="Search articles..." className="w-full max-w-lg text-lg h-12 px-4 border-2 border-primary focus-visible:ring-primary" />
+        <Input type="text" name="q" defaultValue={q} placeholder="搜索文章..." className="w-full max-w-lg text-lg h-12 px-4 border-2 border-primary focus-visible:ring-primary" />
       </form>
       {q && (
-        <p className="text-muted-foreground mb-6">{results.meta.total} results for &ldquo;{q}&rdquo;</p>
+        <p className="text-muted-foreground mb-6">{results.meta.total} 条结果，关键词：&ldquo;{q}&rdquo;</p>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {results.data.map((article) => (

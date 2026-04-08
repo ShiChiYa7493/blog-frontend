@@ -14,19 +14,19 @@ export default function DashboardPage() {
     getStats().then(setStats);
   }, []);
 
-  if (!stats) return <p className="text-muted-foreground">Loading...</p>;
+  if (!stats) return <p className="text-muted-foreground">加载中...</p>;
 
   const cards = [
-    { label: 'Total Articles', value: stats.articleCount },
-    { label: 'Published', value: stats.publishedCount },
-    { label: 'Drafts', value: stats.draftCount },
-    { label: 'Comments', value: stats.commentCount },
-    { label: 'Total Views', value: stats.totalViews },
+    { label: '文章总数', value: stats.articleCount },
+    { label: '已发布', value: stats.publishedCount },
+    { label: '草稿', value: stats.draftCount },
+    { label: '评论', value: stats.commentCount },
+    { label: '总浏览量', value: stats.totalViews },
   ];
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-6">仪表盘</h1>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {cards.map((card, i) => {
           const Icon = icons[i];

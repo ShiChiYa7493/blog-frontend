@@ -37,10 +37,10 @@ export default async function Header() {
             </Link>
           ))}
           <Link href="/archives" className="text-muted-foreground hover:text-foreground transition-colors">
-            Archives
+            归档
           </Link>
           <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
-            About
+            关于
           </Link>
         </nav>
 
