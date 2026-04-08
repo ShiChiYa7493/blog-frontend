@@ -16,11 +16,20 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <ReadingProgress />
-      <Header />
-      <main className="max-w-6xl mx-auto px-4 py-8 min-h-screen">
-        {children}
-      </main>
-      <Footer />
+      {/* Full-page background image */}
+      <div
+        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/9a8690c0c9ed03ffafab0883a12fe55a.jpeg')" }}
+      />
+      <div className="fixed inset-0 z-0 bg-background/85 dark:bg-background/92" />
+      {/* Content */}
+      <div className="relative z-10">
+        <Header />
+        <main className="max-w-6xl mx-auto px-4 py-8 min-h-screen">
+          {children}
+        </main>
+        <Footer />
+      </div>
       <ScrollToTop />
     </>
   );
