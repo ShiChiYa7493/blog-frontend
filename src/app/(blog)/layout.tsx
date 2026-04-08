@@ -4,8 +4,8 @@ import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Blog',
-    template: '%s | 优川七夜 Blog',
+    default: '博客',
+    template: '%s | 优川七夜的博客',
   },
   description: '优川七夜的技术与生活博客',
 };

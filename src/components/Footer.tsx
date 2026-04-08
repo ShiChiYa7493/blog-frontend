@@ -11,7 +11,7 @@ export default function Footer() {
       </div>
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} 优川七夜. Weigh Anchor!</p>
+          <p>&copy; {new Date().getFullYear()} 优川七夜 · 起锚吧！</p>
           <div className="flex gap-6">
             <Link href="/api/rss" className="hover:text-foreground transition-colors">RSS</Link>
             <Link href="/about" className="hover:text-foreground transition-colors">关于</Link>
