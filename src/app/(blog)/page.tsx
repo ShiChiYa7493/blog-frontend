@@ -4,6 +4,7 @@ import HeroArticle from '@/components/HeroArticle';
 import ArticleCard from '@/components/ArticleCard';
 import { AnimatedCards, AnimatedCard } from '@/components/AnimatedCards';
 import { Anchor } from 'lucide-react';
+import { PageTransition } from '@/components/PageTransition';
 
 export default async function Home() {
   let articles: any[] = [];
@@ -26,26 +27,28 @@ export default async function Home() {
   const [hero, ...rest] = articles;
 
   return (
-    <div className="space-y-12">
-      <section>
-        <HeroArticle article={hero} />
-      </section>
-
-      {rest.length > 0 && (
+    <PageTransition>
+      <div className="space-y-12">
         <section>
-          <h2 className="text-lg font-bold mb-6 uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-            最新文章
-            <Anchor className="h-4 w-4 text-primary/40" />
-          </h2>
-          <AnimatedCards>
-            {rest.map((article: any, i: number) => (
-              <AnimatedCard key={article.id}>
-                <ArticleCard article={article} index={i} />
-              </AnimatedCard>
-            ))}
-          </AnimatedCards>
+          <HeroArticle article={hero} />
         </section>
-      )}
-    </div>
+
+        {rest.length > 0 && (
+          <section>
+            <h2 className="text-lg font-bold mb-6 uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+              最新文章
+              <Anchor className="h-4 w-4 text-primary/40" />
+            </h2>
+            <AnimatedCards>
+              {rest.map((article: any, i: number) => (
+                <AnimatedCard key={article.id}>
+                  <ArticleCard article={article} index={i} />
+                </AnimatedCard>
+              ))}
+            </AnimatedCards>
+          </section>
+        )}
+      </div>
+    </PageTransition>
   );
 }

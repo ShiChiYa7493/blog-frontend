@@ -1,19 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getArticles, getCategories } from '@/lib/api';
 import ArticleCard from '@/components/ArticleCard';
 import Pagination from '@/components/Pagination';
-
-interface Category {
-  slug: string;
-  name: string;
-}
-
-interface Article {
-  id: number;
-  [key: string]: unknown;
-}
+import { PageBanner } from '@/components/PageBanner';
+import { PageTransition } from '@/components/PageTransition';
+import { AnimatedCards, AnimatedCard } from '@/components/AnimatedCards';
+import { FolderOpen } from 'lucide-react';
 
 export default async function CategoryPage({ params, searchParams }: { params: { slug: string }; searchParams: { page?: string } }) {
-  let articles: Article[] = [];
+  let articles: any[] = [];
   let meta = { total: 0, page: 1, limit: 10, totalPages: 0 };
   let categoryName = params.slug;
 
@@ -21,21 +16,26 @@ export default async function CategoryPage({ params, searchParams }: { params: {
     const result = await getArticles({ category: params.slug, page: Number(searchParams.page) || 1 });
     articles = result.data || [];
     meta = result.meta;
-    const categories: Category[] = await getCategories();
-    const cat = categories.find((c) => c.slug === params.slug);
+    const categories = await getCategories();
+    const cat = categories.find((c: any) => c.slug === params.slug);
     if (cat) categoryName = cat.name;
   } catch {}
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-2">{categoryName}</h1>
-      <p className="text-muted-foreground mb-8">{meta.total} 篇文章</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {articles.map((article) => (
-          <ArticleCard key={article.id} article={article} />
+    <PageTransition>
+      <PageBanner
+        title={categoryName}
+        subtitle={`共 ${meta.total} 篇文章`}
+        icon={<FolderOpen className="h-7 w-7 text-primary" />}
+      />
+      <AnimatedCards>
+        {articles.map((article: any) => (
+          <AnimatedCard key={article.id}>
+            <ArticleCard article={article} />
+          </AnimatedCard>
         ))}
-      </div>
+      </AnimatedCards>
       <Pagination meta={meta} basePath={`/categories/${params.slug}`} />
-    </div>
+    </PageTransition>
   );
 }

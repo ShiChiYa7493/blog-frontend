@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getGalleryImages } from '@/lib/api';
 import { GalleryGrid } from '@/components/GalleryGrid';
-import { Anchor } from 'lucide-react';
+import { Images } from 'lucide-react';
 import type { Metadata } from 'next';
+import { PageBanner } from '@/components/PageBanner';
+import { PageTransition } from '@/components/PageTransition';
 
 export const metadata: Metadata = {
   title: '图库',
@@ -19,17 +21,16 @@ export default async function GalleryPage() {
   }
 
   return (
-    <div>
-      <div className="flex items-center gap-3 mb-8">
-        <h1 className="text-3xl font-bold">图库</h1>
-        <Anchor className="h-5 w-5 text-primary/40" />
-      </div>
+    <PageTransition>
+      <div>
+        <PageBanner title="图库" subtitle={`共 ${images.length} 张图片`} icon={<Images className="h-7 w-7 text-primary" />} />
 
-      {images.length === 0 ? (
-        <p className="text-center py-20 text-muted-foreground">暂无图片</p>
-      ) : (
-        <GalleryGrid images={images} />
-      )}
-    </div>
+        {images.length === 0 ? (
+          <p className="text-center py-20 text-muted-foreground">暂无图片</p>
+        ) : (
+          <GalleryGrid images={images} />
+        )}
+      </div>
+    </PageTransition>
   );
 }
