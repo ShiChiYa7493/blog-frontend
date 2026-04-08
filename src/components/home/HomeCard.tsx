@@ -11,13 +11,14 @@ const links = [
 
 export function HomeCard() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
-      className="relative z-20 w-full max-w-2xl mx-auto px-4"
-    >
-      <div className="backdrop-blur-xl bg-white/15 dark:bg-black/20 border border-blue-200/30 dark:border-blue-400/20 rounded-2xl p-6 md:p-8 shadow-2xl shadow-blue-900/10">
+    <div className="relative z-20 w-full max-w-2xl mx-auto px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
+        className="backdrop-blur-xl bg-white/15 dark:bg-black/20 border border-blue-200/30 dark:border-blue-400/20 rounded-2xl p-6 md:p-8 shadow-2xl shadow-blue-900/10"
+        style={{ willChange: 'transform, opacity' }}
+      >
         {/* Horizontal layout: left info + right links */}
         <div className="flex flex-col md:flex-row md:items-center md:gap-8">
 
@@ -106,7 +107,7 @@ export function HomeCard() {
             })}
           </motion.div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
