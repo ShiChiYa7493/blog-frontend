@@ -48,3 +48,7 @@ export async function postComment(slug: string, data: { nickname: string; email:
 export async function searchArticles(q: string, page = 1) {
   return fetchAPI(`/search?q=${encodeURIComponent(q)}&page=${page}`);
 }
+
+export async function getGalleryImages(page = 1, limit = 20) {
+  return fetchAPI(`/gallery?page=${page}&limit=${limit}`);
+}

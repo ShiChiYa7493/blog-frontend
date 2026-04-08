@@ -37,6 +37,13 @@ export function MobileNav({ categories }: MobileNavProps) {
                 {cat.name}
               </Link>
             ))}
+            <Link
+              href="/gallery"
+              onClick={() => setOpen(false)}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              图库
+            </Link>
             <Separator />
             <Link href="/archives" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               归档

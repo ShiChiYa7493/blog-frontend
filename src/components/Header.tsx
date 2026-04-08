@@ -32,6 +32,9 @@ export default async function Header() {
 							{cat.name}
 						</Link>
 					))}
+					<Link href="/gallery" className="text-muted-foreground hover:text-foreground transition-colors">
+						图库
+					</Link>
 					<Link href="/archives" className="text-muted-foreground hover:text-foreground transition-colors">
 						Archives
 					</Link>
