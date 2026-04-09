@@ -2,6 +2,7 @@ const API_URL = process.env.API_URL || 'http://127.0.0.1:3001';
 
 async function fetchAPI(path: string, options?: RequestInit) {
   const res = await fetch(`${API_URL}/api${path}`, {
+    cache: 'no-store',
     ...options,
     headers: {
       'Content-Type': 'application/json',
