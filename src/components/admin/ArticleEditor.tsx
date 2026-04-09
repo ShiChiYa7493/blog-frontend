@@ -168,7 +168,49 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
         </div>
       </div>
 
-      <div data-color-mode="light">
+      <div
+        data-color-mode="light"
+        onPaste={async (e) => {
+          const items = e.clipboardData?.items;
+          if (!items) return;
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].type.startsWith('image/')) {
+              e.preventDefault();
+              const file = items[i].getAsFile();
+              if (!file) return;
+              toast.info('图片上传中...');
+              try {
+                const result = await uploadImage(file);
+                setContent((prev: string) => prev + `\n![image](${result.url})\n`);
+                toast.success('图片已插入');
+              } catch {
+                toast.error('图片上传失败');
+              }
+              return;
+            }
+          }
+        }}
+        onDrop={async (e) => {
+          const files = e.dataTransfer?.files;
+          if (!files || files.length === 0) return;
+          const file = files[0];
+          if (!file.type.startsWith('image/')) return;
+          e.preventDefault();
+          toast.info('图片上传中...');
+          try {
+            const result = await uploadImage(file);
+            setContent((prev: string) => prev + `\n![image](${result.url})\n`);
+            toast.success('图片已插入');
+          } catch {
+            toast.error('图片上传失败');
+          }
+        }}
+        onDragOver={(e) => {
+          if (e.dataTransfer?.types?.includes('Files')) {
+            e.preventDefault();
+          }
+        }}
+      >
         <MDEditor value={content} onChange={(val) => setContent(val || '')} height={500} />
       </div>
 
