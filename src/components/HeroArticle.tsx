@@ -20,7 +20,7 @@ export default function HeroArticle({ article }: { article: any }) {
       transition={{ duration: 0.5 }}
     >
       <Link href={`/blog/posts/${article.id}`} className="block group">
-        <div className="relative aspect-[2.2/1] bg-muted rounded-lg overflow-hidden">
+        <div className="relative aspect-[2.5/1] bg-muted rounded-lg overflow-hidden">
           {article.coverImage ? (
             <img
               src={article.coverImage}
@@ -48,11 +48,11 @@ export default function HeroArticle({ article }: { article: any }) {
               <span>&middot;</span>
               <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> 约 {readTime} 分钟</span>
             </div>
-            <h2 className="text-2xl md:text-4xl font-bold leading-tight text-white group-hover:text-white/90 transition-colors">
+            <h2 className="text-2xl md:text-3xl font-bold leading-tight text-white group-hover:text-white/90 transition-colors">
               {article.title}
             </h2>
             {article.summary && (
-              <p className="text-white/70 leading-relaxed line-clamp-2 mt-2 max-w-2xl text-sm md:text-base">
+              <p className="text-white/70 leading-relaxed line-clamp-1 mt-2 max-w-2xl text-sm">
                 {article.summary}
               </p>
             )}
