@@ -178,10 +178,13 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
               e.preventDefault();
               const file = items[i].getAsFile();
               if (!file) return;
+              const textarea = e.currentTarget.querySelector('textarea');
+              const cursor = textarea?.selectionStart ?? content.length;
               toast.info('图片上传中...');
               try {
                 const result = await uploadImage(file);
-                setContent((prev: string) => prev + `\n<img src="${result.url}" width="100%" />\n`);
+                const imgTag = `\n<img src="${result.url}" width="100%" />\n`;
+                setContent((prev: string) => prev.slice(0, cursor) + imgTag + prev.slice(cursor));
                 toast.success('图片已插入');
               } catch {
                 toast.error('图片上传失败');
@@ -196,10 +199,13 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
           const file = files[0];
           if (!file.type.startsWith('image/')) return;
           e.preventDefault();
+          const textarea = e.currentTarget.querySelector('textarea');
+          const cursor = textarea?.selectionStart ?? content.length;
           toast.info('图片上传中...');
           try {
             const result = await uploadImage(file);
-            setContent((prev: string) => prev + `\n<img src="${result.url}" width="100%" />\n`);
+            const imgTag = `\n<img src="${result.url}" width="100%" />\n`;
+            setContent((prev: string) => prev.slice(0, cursor) + imgTag + prev.slice(cursor));
             toast.success('图片已插入');
           } catch {
             toast.error('图片上传失败');
