@@ -23,9 +23,9 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
       />
       <div className="fixed inset-0 z-0 bg-background/85 dark:bg-background/92" />
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col min-h-screen">
         <Header />
-        <main className="max-w-6xl mx-auto px-4 py-8 min-h-screen">
+        <main className="max-w-6xl mx-auto px-4 py-8 w-full flex-1">
           {children}
         </main>
         <Footer />
