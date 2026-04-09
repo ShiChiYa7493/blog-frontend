@@ -19,20 +19,20 @@ export function MobileNav({ categories }: MobileNavProps) {
       <SheetTrigger className={`${buttonVariants({ variant: 'ghost', size: 'icon' })} md:hidden`}>
         <Menu className="h-5 w-5" />
       </SheetTrigger>
-      <SheetContent side="left" className="w-72">
-        <div className="flex flex-col gap-4 mt-8">
-          <Link href="/blog" onClick={() => setOpen(false)} className="flex items-center gap-1.5 text-xl font-black tracking-tight">
+      <SheetContent side="left" className="!w-72 p-0">
+        <div className="flex flex-col h-full px-4 py-6">
+          <Link href="/blog" onClick={() => setOpen(false)} className="flex items-center gap-1.5 text-xl font-black tracking-tight mb-4">
             <Anchor className="h-4 w-4 text-primary" />
             SHICHIYA
           </Link>
-          <Separator />
-          <nav className="flex flex-col gap-3">
+          <Separator className="mb-4" />
+          <nav className="flex flex-col gap-1 flex-1">
             {categories.map((cat) => (
               <Link
                 key={cat.id}
                 href={`/blog/categories/${cat.slug}`}
                 onClick={() => setOpen(false)}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
               >
                 {cat.name}
               </Link>
@@ -40,15 +40,15 @@ export function MobileNav({ categories }: MobileNavProps) {
             <Link
               href="/blog/gallery"
               onClick={() => setOpen(false)}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             >
               图库
             </Link>
-            <Separator />
-            <Link href="/blog/archives" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Separator className="my-2" />
+            <Link href="/blog/archives" onClick={() => setOpen(false)} className="px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
               归档
             </Link>
-            <Link href="/blog/about" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/blog/about" onClick={() => setOpen(false)} className="px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
               关于
             </Link>
           </nav>

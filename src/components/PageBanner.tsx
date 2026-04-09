@@ -8,7 +8,7 @@ interface PageBannerProps {
 
 export function PageBanner({ title, subtitle, icon }: PageBannerProps) {
   return (
-    <div className="relative -mx-4 mb-10 overflow-hidden rounded-lg bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/10 px-6 py-8 md:px-10 md:py-10">
+    <div className="relative mb-10 overflow-hidden rounded-lg bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/10 px-6 py-8 md:px-10 md:py-10">
       {/* Decorative elements */}
       <svg className="absolute right-4 bottom-0 text-primary/5 w-32 h-32 md:w-48 md:h-48" viewBox="0 0 200 200" fill="none">
         <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="1" />
