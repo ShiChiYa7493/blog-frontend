@@ -181,7 +181,7 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
               toast.info('图片上传中...');
               try {
                 const result = await uploadImage(file);
-                setContent((prev: string) => prev + `\n![image](${result.url})\n`);
+                setContent((prev: string) => prev + `\n<img src="${result.url}" width="100%" />\n`);
                 toast.success('图片已插入');
               } catch {
                 toast.error('图片上传失败');
@@ -199,7 +199,7 @@ export default function ArticleEditor({ article, categories, tags }: Props) {
           toast.info('图片上传中...');
           try {
             const result = await uploadImage(file);
-            setContent((prev: string) => prev + `\n![image](${result.url})\n`);
+            setContent((prev: string) => prev + `\n<img src="${result.url}" width="100%" />\n`);
             toast.success('图片已插入');
           } catch {
             toast.error('图片上传失败');
