@@ -21,14 +21,18 @@ export default async function Header() {
 					<MobileNav categories={categories} />
 					<Link href="/blog" className="flex items-center gap-1.5 text-xl font-black tracking-tight">
 						<Anchor className="h-4 w-4 text-primary" />
-						SHICHIYA
+						优川七夜
 					</Link>
 				</div>
 
 				{/* Center: Desktop nav */}
 				<nav className="hidden md:flex items-center gap-6 text-sm">
 					{categories.map((cat: { id: number; name: string; slug: string }) => (
-						<Link key={cat.id} href={`/blog/categories/${cat.slug}`} className="text-muted-foreground hover:text-foreground transition-colors">
+						<Link
+							key={cat.id}
+							href={`/blog/categories/${cat.slug}`}
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
 							{cat.name}
 						</Link>
 					))}
