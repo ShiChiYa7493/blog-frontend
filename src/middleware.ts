@@ -14,7 +14,9 @@ export function middleware(request: NextRequest) {
   if (hostname.startsWith('blog.')) {
     // Root of blog subdomain → show blog homepage
     if (pathname === '/') {
-      return NextResponse.rewrite(new URL('/blog', request.url));
+      const url = request.nextUrl.clone();
+      url.pathname = '/blog';
+      return NextResponse.rewrite(url);
     }
     // /blog/* already correct
     if (pathname.startsWith('/blog')) {
@@ -25,7 +27,9 @@ export function middleware(request: NextRequest) {
       return NextResponse.next();
     }
     // Other paths on blog subdomain → prepend /blog
-    return NextResponse.rewrite(new URL(`/blog${pathname}`, request.url));
+    const url = request.nextUrl.clone();
+    url.pathname = `/blog${pathname}`;
+    return NextResponse.rewrite(url);
   }
 
   // shichiya.cn or www.shichiya.cn
