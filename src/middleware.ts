@@ -12,23 +12,17 @@ export function middleware(request: NextRequest) {
 
   // blog.shichiya.cn → rewrite to /blog routes
   if (hostname.startsWith('blog.')) {
-    // Root of blog subdomain → show blog homepage
-    if (pathname === '/') {
-      const url = request.nextUrl.clone();
-      url.pathname = '/blog';
-      return NextResponse.rewrite(url);
-    }
-    // /blog/* already correct
-    if (pathname.startsWith('/blog')) {
+    // /blog/* and /admin already correct on blog subdomain
+    if (pathname.startsWith('/blog') || pathname.startsWith('/admin')) {
       return NextResponse.next();
     }
-    // /admin stays as-is on blog subdomain
-    if (pathname.startsWith('/admin')) {
-      return NextResponse.next();
-    }
-    // Other paths on blog subdomain → prepend /blog
+    // Force http protocol on the rewrite target. Next.js binds on http
+    // (next start -H 127.0.0.1) but trusts X-Forwarded-Proto: https from
+    // nginx, so its self-perceived origin becomes https://localhost:3000
+    // — a non-existent endpoint, causing the rewrite fetch to 500.
     const url = request.nextUrl.clone();
-    url.pathname = `/blog${pathname}`;
+    url.protocol = 'http:';
+    url.pathname = pathname === '/' ? '/blog' : `/blog${pathname}`;
     return NextResponse.rewrite(url);
   }
 

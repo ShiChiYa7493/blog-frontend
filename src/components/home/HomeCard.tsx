@@ -6,14 +6,18 @@ import { toast } from 'sonner';
 
 const EMAIL = 'shichiya@qq.com';
 
-type LinkItem =
-  | { kind: 'link'; href: string; label: string; icon: typeof Ship; external: boolean }
-  | { kind: 'copy'; value: string; label: string; icon: typeof Mail };
+type LinkItem = {
+  href: string;
+  label: string;
+  icon: typeof Ship;
+  external: boolean;
+  copyOnClick?: string;
+};
 
 const links: LinkItem[] = [
-  { kind: 'link', href: '/blog', label: 'Blog', icon: Ship, external: false },
-  { kind: 'link', href: 'https://github.com/ShiChiYa7493/shichiya-blog', label: 'GitHub', icon: Anchor, external: true },
-  { kind: 'copy', value: EMAIL, label: EMAIL, icon: Mail },
+  { href: 'https://blog.shichiya.cn', label: 'Blog', icon: Ship, external: true },
+  { href: 'https://github.com/ShiChiYa7493/shichiya-blog', label: 'GitHub', icon: Anchor, external: true },
+  { href: `mailto:${EMAIL}`, label: 'Email', icon: Mail, external: false, copyOnClick: EMAIL },
 ];
 
 async function copyToClipboard(text: string) {
@@ -108,28 +112,15 @@ export function HomeCard() {
           >
             {links.map((link) => {
               const Icon = link.icon;
-              const cls = "flex items-center justify-center gap-3 w-full px-4 py-2.5 rounded-xl bg-blue-50/10 hover:bg-blue-100/20 dark:bg-blue-900/10 dark:hover:bg-blue-800/20 border border-blue-200/20 hover:border-blue-300/40 text-white text-sm font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/10";
-              if (link.kind === 'copy') {
-                return (
-                  <button
-                    key={link.label}
-                    type="button"
-                    onClick={() => copyToClipboard(link.value)}
-                    title={`点击复制 ${link.value}`}
-                    className={cls}
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span className="truncate">{link.label}</span>
-                  </button>
-                );
-              }
               return (
                 <a
                   key={link.label}
                   href={link.href}
                   target={link.external ? '_blank' : undefined}
                   rel={link.external ? 'noopener noreferrer' : undefined}
-                  className={cls}
+                  onClick={link.copyOnClick ? () => copyToClipboard(link.copyOnClick!) : undefined}
+                  title={link.copyOnClick ? `点击复制 ${link.copyOnClick}` : undefined}
+                  className="flex items-center justify-center gap-3 w-full px-4 py-2.5 rounded-xl bg-blue-50/10 hover:bg-blue-100/20 dark:bg-blue-900/10 dark:hover:bg-blue-800/20 border border-blue-200/20 hover:border-blue-300/40 text-white text-sm font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/10"
                 >
                   <Icon className="h-4 w-4" />
                   {link.label}
