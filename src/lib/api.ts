@@ -1,4 +1,11 @@
-const API_URL = process.env.API_URL || 'http://127.0.0.1:3001';
+// On the server (SSR / RSC) we need an absolute URL pointing at the backend.
+// In the browser we use a relative path so the request hits the same origin
+// and goes through the /api rewrite in next.config.mjs (which proxies to the
+// loopback-only backend). Without this, browsers would try to fetch
+// http://127.0.0.1:3001 from the user's own machine and get ERR_CONNECTION_REFUSED.
+const API_URL = typeof window === 'undefined'
+  ? (process.env.API_URL || 'http://127.0.0.1:3001')
+  : '';
 
 async function fetchAPI(path: string, options?: RequestInit) {
   const res = await fetch(`${API_URL}/api${path}`, {
