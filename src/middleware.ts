@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // blog.shichiya.com → rewrite to /blog routes
+  // blog.shichiya.cn → rewrite to /blog routes
   if (hostname.startsWith('blog.')) {
     // Root of blog subdomain → show blog homepage
     if (pathname === '/') {
@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL(`/blog${pathname}`, request.url));
   }
 
-  // shichiya.com or www.shichiya.com
+  // shichiya.cn or www.shichiya.cn
   // Root → homepage (default, no rewrite needed since page.tsx is at root)
   if (pathname === '/') {
     return NextResponse.next();

@@ -5,8 +5,8 @@ import { Anchor, Ship, Mail } from 'lucide-react';
 
 const links = [
   { href: '/blog', label: 'Blog', icon: Ship, external: false },
-  { href: 'https://github.com/ShiChiYa7493', label: 'GitHub', icon: Anchor, external: true },
-  { href: 'mailto:contact@shichiya.com', label: 'Email', icon: Mail, external: true },
+  { href: 'https://github.com/ShiChiYa7493/shichiya-blog', label: 'GitHub', icon: Anchor, external: true },
+  { href: 'mailto:shichiya@qq.com', label: 'Email', icon: Mail, external: true },
 ];
 
 export function HomeCard() {
