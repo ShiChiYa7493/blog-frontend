@@ -14,6 +14,15 @@ export default function HomePage() {
       <ParallaxBackground />
       <SakuraCanvas />
       <HomeCard />
+      <div className="absolute bottom-2 left-0 right-0 z-20 flex flex-wrap justify-center items-center gap-x-2 gap-y-1 px-4 text-[11px] text-white/60">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+          蜀ICP备2026017856号
+        </a>
+        <span>·</span>
+        <a href="https://icp.gov.moe/?keyword=20267493" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+          萌ICP备20267493号
+        </a>
+      </div>
     </div>
   );
 }
