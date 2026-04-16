@@ -10,6 +10,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Skip static files in public/ (avatar.jpg, IMG_*.png, etc.). Without this,
+  // requests to blog.shichiya.cn/avatar.jpg get rewritten to /blog/avatar.jpg
+  // and 404. The /uploads matcher already excludes uploaded media.
+  if (/\.[a-zA-Z0-9]{2,5}$/.test(pathname)) {
+    return NextResponse.next();
+  }
+
   // blog.shichiya.cn → rewrite to /blog routes
   if (hostname.startsWith('blog.')) {
     // /blog/* and /admin already correct on blog subdomain
