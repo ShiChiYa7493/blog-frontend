@@ -1,7 +1,10 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { getGalleryImages, uploadGalleryImage, updateGalleryImage, deleteGalleryImage } from '@/lib/admin-api';
+import {
+  getGalleryImages, uploadGalleryImage, updateGalleryImage, deleteGalleryImage,
+  getAdminGalleryCategories,
+} from '@/lib/admin-api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -11,6 +14,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Upload, Trash2, Copy, Edit2 } from 'lucide-react';
 import { toast } from 'sonner';
 
+type GalleryCategory = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
 type GalleryImage = {
   id: string;
   filename: string;
@@ -19,23 +28,32 @@ type GalleryImage = {
   description: string | null;
   size: number;
   mimeType: string;
+  categoryId: string | null;
+  category: GalleryCategory | null;
   createdAt: string;
 };
 
+const selectClass = 'h-9 rounded-md border border-input bg-background px-3 text-sm';
+
 export default function AdminGalleryPage() {
   const [data, setData] = useState<{ data: GalleryImage[]; meta: { total: number; page: number; totalPages: number } } | null>(null);
+  const [categories, setCategories] = useState<GalleryCategory[]>([]);
   const [page, setPage] = useState(1);
+  const [filterCategory, setFilterCategory] = useState('');
+  const [uploadCategory, setUploadCategory] = useState('');
   const [uploading, setUploading] = useState(false);
   const [editingImage, setEditingImage] = useState<GalleryImage | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
+  const [editCategoryId, setEditCategoryId] = useState('');
   const [previewImage, setPreviewImage] = useState<GalleryImage | null>(null);
 
   const load = useCallback(() => {
-    getGalleryImages(page).then(setData);
-  }, [page]);
+    getGalleryImages(page, 20, filterCategory || undefined).then(setData);
+  }, [page, filterCategory]);
 
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { getAdminGalleryCategories().then(setCategories); }, []);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -43,7 +61,7 @@ export default function AdminGalleryPage() {
     setUploading(true);
     try {
       for (let i = 0; i < files.length; i++) {
-        await uploadGalleryImage(files[i]);
+        await uploadGalleryImage(files[i], uploadCategory || undefined);
       }
       toast.success(`已上传 ${files.length} 张图片`);
       load();
@@ -70,14 +88,24 @@ export default function AdminGalleryPage() {
     setEditingImage(image);
     setEditTitle(image.title || '');
     setEditDescription(image.description || '');
+    setEditCategoryId(image.categoryId || '');
   };
 
   const handleEditSave = async () => {
     if (!editingImage) return;
-    await updateGalleryImage(editingImage.id, { title: editTitle, description: editDescription });
+    await updateGalleryImage(editingImage.id, {
+      title: editTitle,
+      description: editDescription,
+      categoryId: editCategoryId || null,
+    });
     toast.success('已更新');
     setEditingImage(null);
     load();
+  };
+
+  const handleFilterChange = (value: string) => {
+    setFilterCategory(value);
+    setPage(1);
   };
 
   const formatSize = (bytes: number) => {
@@ -90,12 +118,24 @@ export default function AdminGalleryPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold">图库管理</h1>
           <p className="text-sm text-muted-foreground mt-1">共 {data.meta.total} 张图片</p>
         </div>
-        <div>
+        <div className="flex flex-wrap items-center gap-2">
+          <select className={selectClass} value={filterCategory} onChange={(e) => handleFilterChange(e.target.value)}>
+            <option value="">全部分类</option>
+            {categories.map((c) => (
+              <option key={c.id} value={c.slug}>{c.name}</option>
+            ))}
+          </select>
+          <select className={selectClass} value={uploadCategory} onChange={(e) => setUploadCategory(e.target.value)} title="上传到分类">
+            <option value="">上传到：未分类</option>
+            {categories.map((c) => (
+              <option key={c.id} value={c.id}>上传到：{c.name}</option>
+            ))}
+          </select>
           <input
             type="file"
             accept="image/*"
@@ -119,13 +159,13 @@ export default function AdminGalleryPage() {
               className="aspect-square bg-muted cursor-pointer"
               onClick={() => setPreviewImage(image)}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={image.url}
                 alt={image.title || image.filename}
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Hover overlay with actions */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
               <Button size="icon" variant="secondary" className="h-8 w-8" onClick={() => handleCopyUrl(image.url)}>
                 <Copy className="h-3.5 w-3.5" />
@@ -137,16 +177,17 @@ export default function AdminGalleryPage() {
                 <Trash2 className="h-3.5 w-3.5" />
               </Button>
             </div>
-            {/* Info bar */}
             <div className="p-2">
               <p className="text-xs truncate text-foreground">{image.title || image.filename}</p>
-              <p className="text-xs text-muted-foreground">{formatSize(image.size)}</p>
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>{formatSize(image.size)}</span>
+                {image.category && <span className="truncate ml-2">{image.category.name}</span>}
+              </div>
             </div>
           </Card>
         ))}
       </div>
 
-      {/* Pagination */}
       {data.meta.totalPages > 1 && (
         <div className="flex justify-center gap-2 mt-6">
           <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage(page - 1)}>上一页</Button>
@@ -155,7 +196,6 @@ export default function AdminGalleryPage() {
         </div>
       )}
 
-      {/* Edit dialog */}
       <Dialog open={!!editingImage} onOpenChange={(open) => { if (!open) setEditingImage(null); }}>
         <DialogContent>
           <DialogHeader>
@@ -170,6 +210,15 @@ export default function AdminGalleryPage() {
               <Label>描述</Label>
               <Textarea value={editDescription} onChange={(e) => setEditDescription(e.target.value)} placeholder="图片描述" rows={3} />
             </div>
+            <div>
+              <Label>分类</Label>
+              <select className={`${selectClass} w-full`} value={editCategoryId} onChange={(e) => setEditCategoryId(e.target.value)}>
+                <option value="">未分类</option>
+                {categories.map((c) => (
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                ))}
+              </select>
+            </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setEditingImage(null)}>取消</Button>
@@ -178,7 +227,6 @@ export default function AdminGalleryPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Preview dialog */}
       <Dialog open={!!previewImage} onOpenChange={(open) => { if (!open) setPreviewImage(null); }}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
@@ -186,6 +234,7 @@ export default function AdminGalleryPage() {
           </DialogHeader>
           {previewImage && (
             <div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={previewImage.url}
                 alt={previewImage.title || previewImage.filename}
@@ -197,6 +246,7 @@ export default function AdminGalleryPage() {
               <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
                 <span>{formatSize(previewImage.size)}</span>
                 <span>{previewImage.mimeType}</span>
+                {previewImage.category && <span>分类：{previewImage.category.name}</span>}
                 <span>{new Date(previewImage.createdAt).toLocaleString('zh-CN')}</span>
               </div>
             </div>

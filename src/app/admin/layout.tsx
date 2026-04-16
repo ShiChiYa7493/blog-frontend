@@ -21,6 +21,7 @@ const navItems = [
   { href: '/admin/tags', label: '标签', icon: Tags },
   { href: '/admin/comments', label: '评论', icon: MessageSquare },
   { href: '/admin/gallery', label: '图库', icon: Images },
+  { href: '/admin/gallery-categories', label: '图库分类', icon: FolderOpen },
   { href: '/admin/settings', label: '设置', icon: Settings },
 ];
 
@@ -38,7 +39,7 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href ||
-            (item.href !== '/admin' && pathname.startsWith(item.href));
+            (item.href !== '/admin' && pathname.startsWith(item.href + '/'));
           return (
             <Link
               key={item.href}

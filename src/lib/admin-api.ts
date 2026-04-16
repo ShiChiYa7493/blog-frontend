@@ -75,12 +75,17 @@ export async function uploadImage(file: File) {
 }
 
 // Gallery
-export const getGalleryImages = (page = 1, limit = 20) => adminFetch(`/gallery?page=${page}&limit=${limit}`);
+export const getGalleryImages = (page = 1, limit = 20, category?: string) => {
+  const q = new URLSearchParams({ page: String(page), limit: String(limit) });
+  if (category) q.set('category', category);
+  return adminFetch(`/gallery?${q}`);
+};
 
-export async function uploadGalleryImage(file: File) {
+export async function uploadGalleryImage(file: File, categoryId?: string) {
   const token = getToken();
   const formData = new FormData();
   formData.append('file', file);
+  if (categoryId) formData.append('categoryId', categoryId);
   const res = await fetch(`${API_BASE}/admin/gallery`, {
     method: 'POST',
     headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
@@ -90,8 +95,17 @@ export async function uploadGalleryImage(file: File) {
   return res.json();
 }
 
-export const updateGalleryImage = (id: string, data: { title?: string; description?: string }) =>
+export const updateGalleryImage = (id: string, data: { title?: string; description?: string; categoryId?: string | null }) =>
   adminFetch(`/admin/gallery/${id}`, { method: 'PUT', body: JSON.stringify(data) });
 
 export const deleteGalleryImage = (id: string) =>
   adminFetch(`/admin/gallery/${id}`, { method: 'DELETE' });
+
+// Gallery categories
+export const getAdminGalleryCategories = () => adminFetch('/gallery-categories');
+export const createGalleryCategory = (data: Record<string, unknown>) =>
+  adminFetch('/admin/gallery-categories', { method: 'POST', body: JSON.stringify(data) });
+export const updateGalleryCategory = (id: string, data: Record<string, unknown>) =>
+  adminFetch(`/admin/gallery-categories/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+export const deleteGalleryCategory = (id: string) =>
+  adminFetch(`/admin/gallery-categories/${id}`, { method: 'DELETE' });

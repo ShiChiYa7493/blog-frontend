@@ -39,7 +39,7 @@ export async function getComments(id: string) {
   return fetchAPI(`/articles/${id}/comments`);
 }
 
-export async function postComment(id: string, data: { nickname: string; email: string; content: string; parentId?: number }) {
+export async function postComment(id: string, data: { nickname: string; email: string; content: string; parentId?: string }) {
   return fetchAPI(`/articles/${id}/comments`, {
     method: 'POST',
     body: JSON.stringify(data),
@@ -50,6 +50,12 @@ export async function searchArticles(q: string, page = 1) {
   return fetchAPI(`/search?q=${encodeURIComponent(q)}&page=${page}`);
 }
 
-export async function getGalleryImages(page = 1, limit = 20) {
-  return fetchAPI(`/gallery?page=${page}&limit=${limit}`);
+export async function getGalleryImages(page = 1, limit = 20, category?: string) {
+  const q = new URLSearchParams({ page: String(page), limit: String(limit) });
+  if (category) q.set('category', category);
+  return fetchAPI(`/gallery?${q}`);
+}
+
+export async function getGalleryCategories() {
+  return fetchAPI('/gallery-categories');
 }
