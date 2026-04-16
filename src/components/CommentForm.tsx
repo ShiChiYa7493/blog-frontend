@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 
-export default function CommentForm({ articleId, parentId, onSubmitted }: {
+export default function CommentForm({ articleId, parentId, replyToName, onSubmitted }: {
   articleId: string;
-  parentId?: number;
+  parentId?: string;
+  replyToName?: string;
   onSubmitted?: () => void;
 }) {
   const [nickname, setNickname] = useState('');
@@ -15,6 +16,10 @@ export default function CommentForm({ articleId, parentId, onSubmitted }: {
   const [content, setContent] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (replyToName) setContent((prev) => (prev.startsWith('@') ? prev : `@${replyToName} `));
+  }, [replyToName, parentId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +31,7 @@ export default function CommentForm({ articleId, parentId, onSubmitted }: {
         body: JSON.stringify({ nickname, email, content, parentId }),
       });
       if (res.ok) {
-        setMessage('评论已提交，等待审核');
+        setMessage('评论已发布');
         setContent('');
         onSubmitted?.();
       } else {

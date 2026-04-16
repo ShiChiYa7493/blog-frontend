@@ -14,22 +14,22 @@ export function TableOfContents({ content }: { content: string }) {
   const [activeId, setActiveId] = useState('');
 
   useEffect(() => {
-    // Parse headings from markdown content
-    const lines = content.split('\n');
-    const items: TocItem[] = [];
-    lines.forEach((line) => {
-      const match = line.match(/^(#{2,4})\s+(.+)/);
-      if (match) {
-        const level = match[1].length;
-        const text = match[2].trim();
-        const id = text
-          .toLowerCase()
-          .replace(/[^\w\u4e00-\u9fff]+/g, '-')
-          .replace(/^-|-$/g, '');
-        items.push({ id, text, level });
-      }
-    });
-    setHeadings(items);
+    // Read headings from rendered DOM so IDs match rehype-slug exactly
+    const collect = () => {
+      const nodes = document.querySelectorAll<HTMLElement>('article h2[id], article h3[id], article h4[id]');
+      const items: TocItem[] = [];
+      nodes.forEach((el) => {
+        items.push({
+          id: el.id,
+          text: el.textContent || '',
+          level: Number(el.tagName.substring(1)),
+        });
+      });
+      setHeadings(items);
+    };
+    collect();
+    const t = setTimeout(collect, 100);
+    return () => clearTimeout(t);
   }, [content]);
 
   useEffect(() => {
@@ -64,6 +64,16 @@ export function TableOfContents({ content }: { content: string }) {
           <li key={h.id}>
             <a
               href={`#${h.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById(h.id);
+                if (!el) return;
+                const headerOffset = 80;
+                const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+                window.scrollTo({ top, behavior: 'smooth' });
+                history.replaceState(null, '', `#${h.id}`);
+                setActiveId(h.id);
+              }}
               className={cn(
                 'block py-0.5 transition-colors border-l-2 -ml-px',
                 h.level === 2 ? 'pl-3' : h.level === 3 ? 'pl-6' : 'pl-9',
