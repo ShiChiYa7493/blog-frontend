@@ -8,7 +8,8 @@ export const metadata: Metadata = {
 		default: "Weigh Anchor!",
 		template: "%s | 优川七夜",
 	},
-	description: "今乗り越え 未来へと Weigh Anchor!",
+	// description: "今乗り越え 未来へと Weigh Anchor!",
+	description: "跨越现今 前往未来 Weigh Anchor!",
 	icons: {
 		icon: [
 			{ url: "/favicon-32.png", sizes: "32x32", type: "image/png" },

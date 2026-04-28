@@ -76,7 +76,7 @@ export default async function BlogSidebar() {
 			<Card className="border-dashed">
 				<CardContent className="p-4 text-center">
 					<Ship className="h-8 w-8 mx-auto text-primary/20 mb-2" />
-					<p className="text-xs text-muted-foreground italic">今乗り越え 未来へと</p>
+					{/* <p className="text-xs text-muted-foreground italic">今乗り越え 未来へと</p> */}
 					<p className="text-[10px] text-muted-foreground/50 mt-1">跨越现今，前往未来</p>
 				</CardContent>
 			</Card>
