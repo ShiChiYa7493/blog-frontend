@@ -2,7 +2,6 @@
 import { getArticle, getArticles } from "@/lib/api"
 import { notFound } from "next/navigation"
 import MarkdownRenderer from "@/components/MarkdownRenderer"
-import CommentSection from "@/components/CommentSection"
 import { TableOfContents } from "@/components/TableOfContents"
 import { MotionDiv } from "@/components/MotionDiv"
 import { Badge } from "@/components/ui/badge"
