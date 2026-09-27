@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@400;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 215 25% 12%;
+    --card: 210 25% 97%;
+    --card-foreground: 215 25% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 12%;
+    --primary: 213 60% 45%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 210 15% 93%;
+    --secondary-foreground: 215 20% 20%;
+    --muted: 210 15% 93%;
+    --muted-foreground: 215 10% 46%;
+    --accent: 210 20% 90%;
+    --accent-foreground: 215 25% 12%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 213 60% 45%;
+    --radius: 0.5rem;
+    --chart-1: 213 60% 45%;
+    --chart-2: 200 55% 50%;
+    --chart-3: 220 50% 55%;
+    --chart-4: 190 45% 60%;
+    --chart-5: 230 40% 65%;
+  }
+
+  .dark {
+    --background: 220 20% 7%;
+    --foreground: 210 20% 95%;
+    --card: 220 18% 10%;
+    --card-foreground: 210 20% 95%;
+    --popover: 220 18% 10%;
+    --popover-foreground: 210 20% 95%;
+    --primary: 213 55% 55%;
+    --primary-foreground: 220 20% 7%;
+    --secondary: 220 15% 16%;
+    --secondary-foreground: 210 20% 90%;
+    --muted: 220 15% 16%;
+    --muted-foreground: 215 10% 55%;
+    --accent: 220 15% 18%;
+    --accent-foreground: 210 20% 95%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 12% 18%;
+    --input: 220 12% 18%;
+    --ring: 213 55% 55%;
+    --chart-1: 213 55% 55%;
+    --chart-2: 200 50% 50%;
+    --chart-3: 220 45% 55%;
+    --chart-4: 190 40% 55%;
+    --chart-5: 230 35% 60%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Noto Serif SC', Georgia, serif;
+  }
+
+  article p {
+    @apply text-base leading-relaxed;
+    line-height: 1.8;
+  }
+}
