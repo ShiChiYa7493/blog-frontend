@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 博客前端
 
 `packages/frontend` 是 shichiya-blog 的 Next.js 14 App Router 前端，包含公开博客、相册和后台管理界面。项目使用 React 18、Tailwind CSS、shadcn/ui、framer-motion，并通过同源 `/api` 请求访问 NestJS 后端。
@@ -38,4 +39,4 @@ npm run dev:frontend
 npm run build:frontend
 ```
 
-生产环境由 PM2 以 `blog-web` 运行，监听 `127.0.0.1:3000`，并由 Nginx 提供公网入口。完整安装、数据库初始化和部署步骤见[仓库 README](../../README.md)。
+生产环境由 PM2 以 `blog-web` 运行，监听 `127.0.0.1:3000`，并由 Nginx 提供公网入口。完整安装、数据库初始化和部署步骤见 [shichiya-blog](https://github.com/ShiChiYa7493/shichiya-blog)。
