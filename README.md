@@ -36,4 +36,4 @@ npm run start
 
 在博客仓库里对应的命令是 `npm run dev:frontend` 和 `npm run build:frontend`。生产环境由博客仓库的 PM2 进程 `blog-web` 监听 `127.0.0.1:3000`，公网入口由 Nginx 提供。
 
-这个仓库不包含数据库、上传目录和机器人。部署整站见 [shichiya-blog](https://github.com/ShiChiYa7493/shichiya-blog)。
+这个仓库不包含数据库和上传目录。部署整站见 [shichiya-blog](https://github.com/ShiChiYa7493/shichiya-blog)。
