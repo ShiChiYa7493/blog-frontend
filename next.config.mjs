@@ -1,6 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  images: {
+    // Uploaded images now live on COS and are referenced by absolute URL.
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.shichiya.cn',
+      },
+    ],
+  },
   async rewrites() {
     return [
       {

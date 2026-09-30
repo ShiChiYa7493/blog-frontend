@@ -80,7 +80,9 @@ export default function AdminGalleryPage() {
   };
 
   const handleCopyUrl = (url: string) => {
-    navigator.clipboard.writeText(window.location.origin + url);
+    // New uploads are absolute COS URLs; legacy rows still use /uploads paths.
+    const fullUrl = /^https?:\/\//i.test(url) ? url : window.location.origin + url;
+    navigator.clipboard.writeText(fullUrl);
     toast.success('链接已复制');
   };
 
