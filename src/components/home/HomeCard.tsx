@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Anchor, Ship, Mail } from "lucide-react"
+import { Anchor, Ship, Mail, Swords, Bot } from "lucide-react"
 import { toast } from "sonner"
 
 const EMAIL = "shichiya@qq.com"
@@ -16,6 +16,8 @@ type LinkItem = {
 
 const links: LinkItem[] = [
 	{ href: "https://blog.shichiya.cn", label: "Blog", icon: Ship, external: true },
+	{ href: "/warframe/arsenal/", label: "Arsenal", icon: Swords, external: false },
+	{ href: "/warframe/bot/", label: "Bot", icon: Bot, external: false },
 	{ href: "https://github.com/ShiChiYa7493/shichiya-blog", label: "GitHub", icon: Anchor, external: true },
 	{ href: `mailto:${EMAIL}`, label: "Email", icon: Mail, external: false, copyOnClick: EMAIL },
 ]
