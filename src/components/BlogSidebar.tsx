@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
+import { cdnAsset } from "@/lib/cdn"
 import Link from "next/link"
 import { getCategories, getTags } from "@/lib/api"
 import { Card, CardContent } from "@/components/ui/card"
@@ -18,7 +19,7 @@ export default async function BlogSidebar() {
 			{/* Profile card */}
 			<Card className="overflow-hidden">
 				<div className="p-6 text-center">
-					<img src="/avatar.jpg" alt="优川七夜" className="w-16 h-16 rounded-full mx-auto mb-3 ring-2 ring-primary/30" />
+					<img src={cdnAsset("avatar.jpg")} alt="优川七夜" className="w-16 h-16 rounded-full mx-auto mb-3 ring-2 ring-primary/30" />
 					<div className=" flex items-center justify-center">
 						<Anchor className="h-3 w-3 text-primary/50" />
 						<h3 className="font-bold">优川七夜</h3>

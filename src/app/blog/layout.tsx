@@ -1,3 +1,4 @@
+import { cdnAsset } from "@/lib/cdn"
 import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -19,7 +20,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
       {/* Full-page background image */}
       <div
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/9a8690c0c9ed03ffafab0883a12fe55a.jpeg')" }}
+        style={{ backgroundImage: `url(${cdnAsset("9a8690c0c9ed03ffafab0883a12fe55a.jpeg")})` }}
       />
       <div className="fixed inset-0 z-0 bg-background/85 dark:bg-background/92" />
       {/* Content */}

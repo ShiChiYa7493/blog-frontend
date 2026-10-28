@@ -1,5 +1,6 @@
 'use client';
 
+import { cdnAsset } from "@/lib/cdn"
 import { useEffect, useState } from 'react';
 
 export function ParallaxBackground() {
@@ -22,7 +23,7 @@ export function ParallaxBackground() {
       <div
         className="absolute inset-[-40px] bg-cover bg-center transition-transform duration-300 ease-out"
         style={{
-          backgroundImage: `url('/home-bg.jpg')`,
+          backgroundImage: `url(${cdnAsset("home-bg.jpg")})`,
           transform: `translate(${offset.x}px, ${offset.y}px) scale(1.05)`,
         }}
       />

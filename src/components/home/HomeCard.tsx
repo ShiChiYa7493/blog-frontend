@@ -1,5 +1,6 @@
 "use client"
 
+import { cdnAsset } from "@/lib/cdn"
 import { motion } from "framer-motion"
 import { Anchor, Ship, Mail, Swords, Bot } from "lucide-react"
 import { toast } from "sonner"
@@ -49,7 +50,7 @@ export function HomeCard() {
 						<div className="flex items-center gap-4 mb-3">
 							<motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5, delay: 0.6, type: "spring" }}>
 								<img
-									src="/avatar.jpg"
+									src={cdnAsset("avatar.jpg")}
 									alt="优川七夜"
 									className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover shadow-lg ring-4 ring-blue-200/40 dark:ring-blue-400/30"
 								/>

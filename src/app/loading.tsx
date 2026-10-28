@@ -1,9 +1,11 @@
+import { cdnAsset } from "@/lib/cdn"
+
 /* eslint-disable @next/next/no-img-element */
 export default function Loading() {
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center px-4">
       <img
-        src="/IMG_7444.png"
+        src={cdnAsset("IMG_7444.png")}
         alt="Loading..."
         className="w-36 h-36 object-contain rounded-2xl mb-6 animate-bounce"
         style={{ animationDuration: '2s' }}
