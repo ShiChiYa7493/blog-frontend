@@ -5,17 +5,15 @@ import { appendSample, HISTORY_SERVICE_IDS } from "@/lib/status-history"
 export const dynamic = "force-dynamic"
 
 /**
- * Loopback-only collector entrypoint.
+ * Collector entrypoint, protected by a shared bearer token.
  *
- * nginx always adds X-Forwarded-For, so a request without it comes straight
- * from the host (the cron job). A shared token is accepted as an alternative
- * for running the collector from another machine.
+ * A source-address check is not usable here: Next.js fills in
+ * X-Forwarded-For from the socket, so loopback and proxied requests look the
+ * same. The token lives in the server .env and is only used by the cron job.
  */
 export async function GET(request: Request) {
-	const proxied = request.headers.get("x-forwarded-for")
 	const token = process.env.STATUS_RECORD_TOKEN
-	const authorized = !proxied || (token ? request.headers.get("authorization") === `Bearer ${token}` : false)
-	if (!authorized) {
+	if (!token || request.headers.get("authorization") !== `Bearer ${token}`) {
 		return NextResponse.json({ ok: false, error: "forbidden" }, { status: 403 })
 	}
 
