@@ -1,0 +1,28 @@
+{
+  "incidents": [
+    {
+      "date": "2026-10-29",
+      "service": "arsenal",
+      "level": "major",
+      "status": "resolved",
+      "title": "ARSENAL 站点无法打开",
+      "summary": "部署到 /warframe/arsenal/ 子路径后首屏异常；前后端规则版本不一致时整站拒绝服务。当日修复。"
+    },
+    {
+      "date": "2026-10-22",
+      "service": "data",
+      "level": "minor",
+      "status": "resolved",
+      "title": "图片存储读请求异常",
+      "summary": "每小时全量图片校验叠加一个残留进程，产生大量对象存储读请求与 CPU 空转；用户侧无明显影响。当日修复。"
+    },
+    {
+      "date": "2026-10-19",
+      "service": "data",
+      "level": "major",
+      "status": "resolved",
+      "title": "游戏数据停更",
+      "summary": "更新锁在进程被强杀后未释放，数据刷新中断约两天；期间掉落与遗物信息可能过期。已修复并补了锁回收逻辑。"
+    }
+  ]
+}
