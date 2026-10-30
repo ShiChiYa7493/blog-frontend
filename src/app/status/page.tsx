@@ -1,9 +1,11 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Activity, AlertTriangle, CheckCircle2, ChevronLeft, ChevronRight, HelpCircle, Info, XCircle } from "lucide-react"
+import { Activity, AlertTriangle, CheckCircle2, HelpCircle, Info, XCircle } from "lucide-react"
 import { SiteShell } from "@/components/SiteShell"
+import { UptimeBars } from "@/components/status/UptimeBars"
+import { IncidentCalendar, type Incident } from "@/components/status/IncidentCalendar"
 import { collectStatus, type ServiceState } from "@/lib/status"
-import { buildUptimeReport, type DayCell } from "@/lib/status-history"
+import { buildUptimeReport } from "@/lib/status-history"
 import incidentsFile from "@/content/incidents.json"
 
 export const dynamic = "force-dynamic"
@@ -21,15 +23,6 @@ export const metadata: Metadata = {
 		url: `${SITE_URL}/status`,
 		type: "website",
 	},
-}
-
-type Incident = {
-	date: string
-	service: string
-	level: "major" | "minor" | "info"
-	status: string
-	title: string
-	summary: string
 }
 
 const INCIDENTS = (incidentsFile.incidents as Incident[]).slice().sort((a, b) => (a.date < b.date ? 1 : -1))
@@ -63,14 +56,6 @@ const STATE_LABEL: Record<ServiceState, string> = {
 	unknown: "未知",
 }
 
-const TICK_CLASS: Record<DayCell["state"], string> = {
-	up: "bg-emerald-500/85",
-	degraded: "bg-amber-400/90",
-	down: "bg-rose-500/90",
-	unknown: "bg-muted-foreground/25",
-	none: "bg-muted-foreground/10",
-}
-
 const BANNER: Record<string, { title: string; body: string; tone: string; icon: typeof CheckCircle2; iconColor: string }> = {
 	operational: {
 		title: "一切运行正常",
@@ -95,47 +80,10 @@ const BANNER: Record<string, { title: string; body: string; tone: string; icon: 
 	},
 }
 
-function currentMonth(): string {
-	return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit" }).format(new Date())
-}
-
-function shiftMonth(ym: string, delta: number): string {
-	const [year, month] = ym.split("-").map(Number)
-	const date = new Date(Date.UTC(year, month - 1 + delta, 1))
-	return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`
-}
-
-function monthLabel(ym: string): string {
-	const [year, month] = ym.split("-").map(Number)
-	return `${year}年${month}月`
-}
-
-function buildCalendar(ym: string): (string | null)[] {
-	const [year, month] = ym.split("-").map(Number)
-	const first = new Date(Date.UTC(year, month - 1, 1))
-	const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate()
-	const leading = (first.getUTCDay() + 6) % 7 // Monday-first grid
-	const cells: (string | null)[] = Array.from({ length: leading }, () => null)
-	for (let day = 1; day <= daysInMonth; day += 1) {
-		cells.push(`${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`)
-	}
-	while (cells.length % 7 !== 0) cells.push(null)
-	return cells
-}
-
-export default async function StatusPage({ searchParams }: { searchParams: { month?: string } }) {
+export default async function StatusPage() {
 	const [snapshot, report] = await Promise.all([collectStatus(), buildUptimeReport(90)])
 	const banner = BANNER[snapshot.overall] ?? BANNER.unknown
 	const BannerIcon = banner.icon
-
-	const month = /^\d{4}-\d{2}$/.test(searchParams?.month ?? "") ? searchParams!.month! : currentMonth()
-	const calendar = buildCalendar(month)
-	const monthIncidents = INCIDENTS.filter((incident) => incident.date.startsWith(month))
-	const incidentsByDate = new Map(monthIncidents.map((incident) => [incident.date, incident]))
-	const statusLabel = (value: string) => (value === "resolved" ? "已解决" : value === "ongoing" ? "处理中" : value)
-	const prevMonth = shiftMonth(month, -1)
-	const nextMonth = shiftMonth(month, 1)
-	const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date())
 
 	return (
 		<SiteShell current="/status">
@@ -155,7 +103,6 @@ export default async function StatusPage({ searchParams }: { searchParams: { mon
 					</Link>
 				</div>
 
-				{/* Overall banner */}
 				<section className={`rounded-xl border px-5 py-4 ${banner.tone}`}>
 					<div className="flex items-center gap-2">
 						<BannerIcon className={`h-5 w-5 ${banner.iconColor}`} />
@@ -163,7 +110,8 @@ export default async function StatusPage({ searchParams }: { searchParams: { mon
 					</div>
 					<p className="text-sm text-muted-foreground mt-1">{banner.body}</p>
 					<p className="text-[11px] text-muted-foreground/70 mt-2">
-						检测于 {new Intl.DateTimeFormat("zh-CN", {
+						检测于{" "}
+						{new Intl.DateTimeFormat("zh-CN", {
 							timeZone: "Asia/Shanghai",
 							month: "2-digit",
 							day: "2-digit",
@@ -175,7 +123,6 @@ export default async function StatusPage({ searchParams }: { searchParams: { mon
 					</p>
 				</section>
 
-				{/* Uptime per service */}
 				<section className="mt-4 rounded-xl border border-border/70 bg-card/60 overflow-hidden">
 					<header className="flex items-center justify-between px-5 py-3 border-b border-border/60">
 						<h2 className="text-sm font-semibold">系统状态</h2>
@@ -205,19 +152,7 @@ export default async function StatusPage({ searchParams }: { searchParams: { mon
 											{service.availability === null ? "—" : `${service.availability.toFixed(2)}%`} 可用性
 										</span>
 									</div>
-									<div
-										className="mt-2 flex gap-[3px] h-6"
-										role="img"
-										aria-label={`${meta.name} 最近 ${report.windowDays} 天可用性`}
-									>
-										{service.days.map((cell) => (
-											<span
-												key={cell.date}
-												title={`${cell.date} · ${cell.state === "none" ? "无数据" : STATE_LABEL[cell.state as ServiceState]}`}
-												className={`flex-1 rounded-[2px] ${TICK_CLASS[cell.state]}`}
-											/>
-										))}
-									</div>
+									<UptimeBars days={service.days} label={meta.name} />
 								</li>
 							)
 						})}
@@ -231,76 +166,13 @@ export default async function StatusPage({ searchParams }: { searchParams: { mon
 					</div>
 					<p className="px-5 pb-4 pt-1 text-[11px] leading-relaxed text-muted-foreground/80">
 						{report.samples === 0
-							? "可用率从今天开始统计，此前的日期显示为灰色。每 5 分钟探测一次。"
+							? "可用率从今天开始统计，此前的日期显示为灰色。每 5 分钟探测一次，悬停色块可查看当天状态。"
 							: `按每 5 分钟一次的探测统计，共 ${report.samples} 次采样；灰色表示尚未记录。`}
 					</p>
 				</section>
 
-				{/* Incident calendar */}
 				<section className="mt-4 rounded-xl border border-border/70 bg-card/60 overflow-hidden">
-					<header className="flex items-center justify-between px-5 py-3 border-b border-border/60">
-						<h2 className="text-sm font-semibold">事件日历</h2>
-						<div className="flex items-center gap-1 text-xs text-muted-foreground">
-							<Link href={`/status?month=${prevMonth}`} className="p-1 rounded hover:bg-muted transition-colors" aria-label="上个月">
-								<ChevronLeft className="h-4 w-4" />
-							</Link>
-							<span className="tabular-nums mx-1">{monthLabel(month)}</span>
-							<Link href={`/status?month=${nextMonth}`} className="p-1 rounded hover:bg-muted transition-colors" aria-label="下个月">
-								<ChevronRight className="h-4 w-4" />
-							</Link>
-						</div>
-					</header>
-
-					<div className="px-5 py-4">
-						<div className="grid grid-cols-7 text-center text-[11px] text-muted-foreground mb-2">
-							{["一", "二", "三", "四", "五", "六", "日"].map((day) => (
-								<span key={day}>{day}</span>
-							))}
-						</div>
-						<div className="grid grid-cols-7 gap-y-1.5 text-center text-xs">
-							{calendar.map((date, index) => {
-								if (!date) return <span key={`blank-${index}`} />
-								const incident = incidentsByDate.get(date)
-								const isToday = date === today
-								return (
-									<span key={date} className="flex items-center justify-center">
-										<span
-											title={incident ? incident.title : undefined}
-											className={[
-												"flex h-7 w-7 items-center justify-center rounded-full tabular-nums transition-colors",
-												incident
-													? incident.level === "major"
-														? "border border-rose-500/50 text-rose-600 dark:text-rose-400"
-														: "border border-amber-500/50 text-amber-600 dark:text-amber-400"
-													: "text-muted-foreground",
-												isToday && !incident ? "bg-primary/10 text-foreground font-medium" : "",
-											].join(" ")}
-										>
-											{Number(date.slice(8))}
-										</span>
-									</span>
-								)
-							})}
-						</div>
-
-						<div className="mt-4 space-y-2">
-							{monthIncidents.length === 0 ? (
-								<p className="text-xs text-muted-foreground">本月无已记录的事件。</p>
-							) : (
-								monthIncidents.map((incident) => (
-									<div key={`${incident.date}-${incident.title}`} className="rounded-lg border border-border/60 px-3 py-2">
-										<div className="flex items-center gap-2 text-xs">
-											<span className={`h-1.5 w-1.5 rounded-full ${incident.level === "major" ? "bg-rose-500" : "bg-amber-500"}`} />
-											<span className="tabular-nums text-muted-foreground">{incident.date}</span>
-											<span className="text-[11px] text-muted-foreground">· {statusLabel(incident.status)}</span>
-										</div>
-										<p className="text-sm mt-1">{incident.title}</p>
-										<p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{incident.summary}</p>
-									</div>
-								))
-							)}
-						</div>
-					</div>
+					<IncidentCalendar incidents={INCIDENTS} />
 				</section>
 
 				<p className="mt-4 text-[11px] leading-relaxed text-muted-foreground/70">
