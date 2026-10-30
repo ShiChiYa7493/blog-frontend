@@ -78,6 +78,13 @@ const CATALOG_STATE_LABEL: Record<string, string> = {
 	"bundled-fallback": "内置快照",
 }
 
+/** Production dataVersion can be 150+ chars (pkg version + two release ids); keep the card readable. */
+function shortenDataVersion(version: string | null): string | null {
+	if (!version) return null
+	if (version.length <= 24) return version
+	return `${version.slice(0, 21)}…`
+}
+
 function formatRunTime(value: string | null): string | null {
 	if (!value) return null
 	const date = new Date(value)
@@ -136,7 +143,7 @@ async function checkArsenalApi(): Promise<ServiceStatus> {
 	const parts = [
 		catalogState ? `目录 ${CATALOG_STATE_LABEL[catalogState] ?? catalogState}` : null,
 		rulesVersion ? `规则 ${shortRulesVersion(rulesVersion)}` : null,
-		dataVersion ? `数据 ${dataVersion}` : null,
+		dataVersion ? `数据 ${shortenDataVersion(dataVersion)}` : null,
 	].filter(Boolean)
 	// "bundled-fallback" / "offline-cache" means the service is up but serving stale data.
 	const degraded = catalogState === "bundled-fallback" || catalogState === "offline-cache"

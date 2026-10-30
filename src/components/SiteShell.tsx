@@ -3,7 +3,8 @@ import { Anchor } from "lucide-react"
 import { ThemeToggle } from "@/components/ThemeToggle"
 
 const NAV = [
-	{ href: "/blog", label: "博客" },
+	// 博客在独立子域，主域的 /blog 没有代理到 Next
+	{ href: "https://blog.shichiya.cn", label: "博客" },
 	{ href: "/changelog", label: "更新记录" },
 	{ href: "/status", label: "服务状态" },
 	{ href: "/warframe/arsenal/", label: "ARSENAL" },

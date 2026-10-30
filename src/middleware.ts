@@ -19,6 +19,11 @@ export function middleware(request: NextRequest) {
 
   // blog.shichiya.cn → rewrite to /blog routes
   if (hostname.startsWith('blog.')) {
+    // Site-level pages (status / changelog) belong to the main domain; send
+    // visitors there instead of rewriting them into a non-existent /blog/* route.
+    if (/^\/(status|changelog|site-status)\/?$/.test(pathname)) {
+      return NextResponse.redirect(new URL(pathname, 'https://shichiya.cn'), 308);
+    }
     // /blog/* and /admin already correct on blog subdomain
     if (pathname.startsWith('/blog') || pathname.startsWith('/admin')) {
       return NextResponse.next();
