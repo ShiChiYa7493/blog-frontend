@@ -42,6 +42,9 @@ export default async function Header() {
 					<Link href="/blog/archives" className="text-muted-foreground hover:text-foreground transition-colors">
 						Archives
 					</Link>
+					<Link href="/changelog" className="text-muted-foreground hover:text-foreground transition-colors">
+						更新
+					</Link>
 					<Link href="/blog/about" className="text-muted-foreground hover:text-foreground transition-colors">
 						About
 					</Link>

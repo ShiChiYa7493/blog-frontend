@@ -23,6 +23,12 @@ export default function Footer() {
 						</a>
 					</div>
 					<div className="flex gap-6">
+						<Link href="/changelog" className="hover:text-foreground transition-colors">
+							更新记录
+						</Link>
+						<Link href="/status" className="hover:text-foreground transition-colors">
+							服务状态
+						</Link>
 						<Link href="/api/rss" className="hover:text-foreground transition-colors">
 							RSS
 						</Link>
